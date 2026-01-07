@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhoel Bagnasco - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__title">Jhoel Bagnasco</h1>
+            <nav class="nav">
+                <button class="nav__toggle" aria-label="Toggle navigation">☰</button>
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="#projects" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="#articles" class="nav__link">Articles</a></li>
+                    <li class="nav__item"><a href="#experience" class="nav__link">Experience</a></li>
+                    <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header__controls">
+                <select class="language-select" aria-label="Select language">
+                    <option value="en">EN</option>
+                    <option value="pt">PT-BR</option>
+                </select>
+                <button class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="about" class="hero">
+            <div class="hero__container">
+                <h2 class="hero__title">About Me</h2>
+                <p class="hero__description">Jhoel Bagnasco is a full-stack developer with over 5 years of experience, specializing in Java for backend systems and with expertise in modern frontend technologies like React and TypeScript. He excels in building cloud-native APIs, event-driven architectures, and CI/CD pipelines, while maintaining clean, scalable codebases.</p>
+                <a href="#projects" class="btn btn--primary">View My Work</a>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="projects__container">
+                <h2 class="section-title">Main Projects</h2>
+                <div class="projects__grid">
+                    <article class="project-card">
+                        <h3 class="project-card__title">Kwik</h3>
+                        <p class="project-card__description">Ecommerce application built with Java 17, Spring Boot, and Postgres. Management UI uses React, TypeScript, and Tailwind, deployed to AWS via GitHub Actions.</p>
+                        <a href="https://github.com/bagnascojhoel/kwik-ecommerce" class="project-card__link">View on GitHub</a>
+                    </article>
+                    <article class="project-card">
+                        <h3 class="project-card__title">My Portfolio Website</h3>
+                        <p class="project-card__description">Monorepo including front-end, BFF, and blog. Built with Spring, Svelte, Java, and automated deployments via GitHub Actions.</p>
+                        <a href="https://github.com/bagnascojhoel/portfolio-website-monorepo" class="project-card__link">View on GitHub</a>
+                    </article>
+                    <article class="project-card">
+                        <h3 class="project-card__title">NEditor</h3>
+                        <p class="project-card__description">A Rich Text Editor built with React and Slate for flexible content editing.</p>
+                        <a href="https://github.com/bagnascojhoel/neditor" class="project-card__link">View on GitHub</a>
+                    </article>
+                    <article class="project-card">
+                        <h3 class="project-card__title">Kwik Chat API</h3>
+                        <p class="project-card__description">Python API for LLM-based chat interactions, using Flask and clean architecture, deployed on Fly.io.</p>
+                        <a href="https://github.com/bagnascojhoel/kwik-chat-api" class="project-card__link">View on GitHub</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="articles" class="articles">
+            <div class="articles__container">
+                <h2 class="section-title">Articles</h2>
+                <ul class="articles__list">
+                    <li class="article-item">
+                        <h3 class="article-item__title">Compiling a Spring Boot Project to a Native Image</h3>
+                        <p class="article-item__excerpt">An in-depth guide on optimizing Spring Boot applications for faster startup and lower memory usage using native images.</p>
+                        <a href="#" class="article-item__link">Read More</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="experience" class="experience">
+            <div class="experience__container">
+                <h2 class="section-title">Work Experience</h2>
+                <div class="experience__timeline">
+                    <div class="experience-item">
+                        <h3 class="experience-item__role">Full-Stack Developer</h3>
+                        <p class="experience-item__company">Company X</p>
+                        <p class="experience-item__dates">2020 - Present</p>
+                        <p class="experience-item__description">Developed and maintained full-stack applications using Java, Spring, React, and TypeScript. Implemented CI/CD pipelines and deployed to AWS.</p>
+                    </div>
+                    <div class="experience-item">
+                        <h3 class="experience-item__role">Backend Developer</h3>
+                        <p class="experience-item__company">Company Y</p>
+                        <p class="experience-item__dates">2018 - 2020</p>
+                        <p class="experience-item__description">Specialized in backend APIs with Java and Spring, focusing on event-driven architectures and database optimization.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        <div class="footer__container">
+            <h2 class="section-title">Contact</h2>
+            <p>Email: bagnascojhoel@gmail.com</p>
+            <p>LinkedIn: <a href="https://www.linkedin.com/in/bagnascojhoel/">linkedin.com/in/bagnascojhoel</a></p>
+            <p>GitHub: <a href="https://github.com/bagnascojhoel">github.com/bagnascojhoel</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
