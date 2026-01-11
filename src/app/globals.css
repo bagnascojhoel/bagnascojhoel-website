@@ -119,8 +119,33 @@
   }
 
   .select-chevron {
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    /* Use native-appearance reset so custom styles render consistently */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    /* Use currentColor so the chevron follows text color and themes */
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 8px center;
+    background-position: right 12px center;
+    background-size: 12px 8px;
+
+    /* Ensure space for the chevron */
+    padding-right: 2.5rem;
+
+    /* Smooth color and shadow transitions */
+    transition: color .12s ease, box-shadow .12s ease, transform .12s ease;
+  }
+
+  /* Language-select specific styling to match site design */
+  .language-select {
+    color: hsl(var(--color-muted-foreground));
+    background-color: hsl(var(--color-card));
+    border-radius: var(--radius-md);
+  }
+
+  .language-select:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px hsl(var(--color-primary) / 0.12);
   }
 }

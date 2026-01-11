@@ -1,12 +1,22 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSelector from "./LanguageSelector";
+import { isMobileDevice } from "../services/device";
 
 const FloatingControls = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
+
+  const mobileClasses = "fixed bottom-6 right-6 flex flex-col items-end gap-4 z-[100]";
+  const desktopClasses = "fixed top-6 left-6 flex flex-row items-center gap-4 z-[100]";
+
   return (
-    <div className="fixed bottom-6 right-6 md:bottom-auto md:right-auto md:top-8 md:left-8 flex flex-col items-end md:flex-row md:items-center gap-4 z-[100]">
+    <div className={isMobile ? mobileClasses : desktopClasses}>
       <ThemeToggle />
       <LanguageSelector />
     </div>

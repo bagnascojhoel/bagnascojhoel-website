@@ -12,9 +12,9 @@ export default function Home() {
       <GeometricBackground />
       <FloatingControls />
 
-      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-start px-6 md:px-0">
+      <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-start px-6 md:pl-6 md:pr-0">
         {/* Main Content Area */}
-        <main className="flex-1 md:w-[calc(100%-var(--work-sidebar-width))] md:mt-20 md:pr-10">
+        <main className="flex-1 md:w-[calc(100%-var(--work-sidebar-width))] mt-24 md:pr-10">
           <Hero />
           <Experience />
           
