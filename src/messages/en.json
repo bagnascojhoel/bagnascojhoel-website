@@ -39,8 +39,8 @@
     "resume": "Resume"
   },
   "Work": {
-    "title": "Projects",
-    "subtitle": "Selection of my favorite projects",
+    "title": "Public Work",
+    "subtitle": "A curated selection of studies, articles, and open-source projects.",
     "viewProject": "View Project"
   },
   "Footer": {
