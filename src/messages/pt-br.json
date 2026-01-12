@@ -44,10 +44,10 @@
     "viewProject": "Ver Projeto"
   },
   "Footer": {
-    "madeWith": "feito com",
-    "by": "por mim"
+    "madeBy": "feito por mim com"
   },
   "Common": {
-    "toggleTheme": "Alternar tema"
+    "toggleTheme": "Alternar tema",
+    "loading": "Carregando…"
   }
 }

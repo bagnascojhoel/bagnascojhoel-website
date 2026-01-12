@@ -44,10 +44,10 @@
     "viewProject": "View Project"
   },
   "Footer": {
-    "madeWith": "made with",
-    "by": "by me"
+    "madeBy": "made by me with"
   },
   "Common": {
-    "toggleTheme": "Toggle theme"
+    "toggleTheme": "Toggle theme",
+    "loading": "Loading…"
   }
 }
