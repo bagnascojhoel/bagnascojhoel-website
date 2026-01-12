@@ -1,17 +1,17 @@
+// DEPRECATED: Component moved to src/app/_components/WorkSidebar.tsx — use that path instead.
 import React from 'react';
-import { WorkItemType } from '@/types/work';
 import WorkItem from './WorkItem';
 import { getTranslations } from 'next-intl/server';
-import { getWorkItems } from '@/services/work';
+// DEPRECATED: use src/app/_components/WorkSidebar.tsx instead
 
-const WorkSidebar = async () => {
+interface WorkSidebarProps {
+  // DEPRECATED: Use new WorkSidebar in src/app/_components. Accepting any[] for backward compatibility.
+  items?: any[];
+}
+
+const WorkSidebar = async ({ items = [] }: WorkSidebarProps) => {
   const t = await getTranslations('Work');
-  let workItems: WorkItemType[] = [];
-  try {
-    workItems = await getWorkItems();
-  } catch (_error) {
-    // Already logged in getWorkItems
-  }
+  const workItems: any[] = items;
 
   return (
     <section
@@ -34,4 +34,4 @@ const WorkSidebar = async () => {
   );
 };
 
-export default WorkSidebar;
+

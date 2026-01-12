@@ -1,12 +1,32 @@
-import Hero from "@/components/Hero";
-import WorkSidebar from "@/components/WorkSidebar";
-import Experience from "@/components/Experience";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
-import FloatingControls from "@/components/FloatingControls";
-import GeometricBackground from "@/components/GeometricBackground";
+import Hero from "@/app/_components/Hero";
+import WorkSidebar from "@/app/_components/WorkSidebar";
+import Experience from "@/app/_components/Experience";
+import Contact from "@/app/_components/Contact";
+import Footer from "@/app/_components/Footer";
+import FloatingControls from "@/app/_components/FloatingControls";
+import GeometricBackground from "@/app/_components/GeometricBackground";
 
-export default function Home() {
+import PublicWorkErrorBoundary from '@/app/_components/PublicWorkErrorBoundary';
+import { GetPublicWorkUseCase, PublicWorkItem } from '@/use-cases/GetPublicWorkUseCase';
+import { GitHubRepositoryRest } from '@/adapters/repositories/GitHubRepositoryRest';
+import { NotionRepositoryRest } from '@/adapters/repositories/NotionRepositoryRest';
+import { CertificationRepositoryJson } from '@/adapters/repositories/CertificationRepositoryJson';
+
+export default async function Home() {
+  let workItems: PublicWorkItem[] = [];
+  let workError = false;
+  try {
+    const useCase = new GetPublicWorkUseCase(
+      new GitHubRepositoryRest(),
+      new NotionRepositoryRest(),
+      new CertificationRepositoryJson()
+    );
+    workItems = await useCase.execute();
+  } catch (err) {
+    console.error('Failed to load public work items:', err);
+    workError = true;
+  }
+
   return (
     <div className="relative min-h-screen">
       <GeometricBackground />
@@ -20,7 +40,9 @@ export default function Home() {
           
           {/* Work Sidebar - Regular section on mobile, right after experience */}
           <div className="md:hidden">
-            <WorkSidebar />
+            <PublicWorkErrorBoundary hasError={workError}>
+              <WorkSidebar items={workItems} />
+            </PublicWorkErrorBoundary>
           </div>
 
           <Contact />
@@ -30,7 +52,9 @@ export default function Home() {
         {/* Work Sidebar - Fixed on desktop within the layout constrained area */}
         <aside className="hidden md:block w-sidebar flex-shrink-0">
           <div className="fixed top-0 bottom-0 w-sidebar">
-            <WorkSidebar />
+            <PublicWorkErrorBoundary hasError={workError}>
+              <WorkSidebar items={workItems} />
+            </PublicWorkErrorBoundary>
           </div>
         </aside>
       </div>

@@ -1,6 +1,5 @@
-"use client";
-
-import React from "react";
+// DEPRECATED: Component moved to src/app/_components/GeometricBackground.tsx — use that path instead.
+export { default } from '@/app/_components/GeometricBackground';
 
 const GeometricBackground = () => {
   return (
@@ -22,4 +21,4 @@ const GeometricBackground = () => {
   );
 };
 
-export default GeometricBackground;
+

@@ -1,9 +1,5 @@
-'use client';
-
-import {
-  useState,
-  useRef,
-  useEffect,
+// DEPRECATED: Component moved to src/app/_components/LanguageSelector.tsx — use that path instead.
+export { default } from '@/app/_components/LanguageSelector';
   type FC,
   type MutableRefObject,
   type KeyboardEvent,
@@ -198,4 +194,4 @@ const LanguageSelector = () => {
   );
 };
 
-export default LanguageSelector;
+

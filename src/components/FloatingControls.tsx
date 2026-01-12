@@ -1,6 +1,5 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+// DEPRECATED: Component moved to src/app/_components/FloatingControls.tsx — use that path instead.
+export { default } from '@/app/_components/FloatingControls';
 import ThemeToggle from "./ThemeToggle";
 import LanguageSelector from "./LanguageSelector";
 import { isMobileDevice } from "../services/device";
@@ -23,4 +22,4 @@ const FloatingControls = () => {
   );
 };
 
-export default FloatingControls;
+

@@ -1,13 +1,13 @@
-"use client";
-
-import React, { useState } from "react";
+// DEPRECATED: Component moved to src/app/_components/WorkItem.tsx — use that path instead.
+export { default } from '@/app/_components/WorkItem';
 import { Layers, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WorkItemType } from "@/types/work";
+// DEPRECATED: use the new component under src/app/_components/WorkItem.tsx
 import { useTranslations } from "next-intl";
 
 interface WorkItemProps {
-  item: WorkItemType;
+  // DEPRECATED: Use new WorkItem in src/app/_components. Keeping 'any' here to avoid type errors until removal.
+  item: any;
 }
 
 const WorkItem = ({ item }: WorkItemProps) => {
@@ -75,7 +75,7 @@ const WorkItem = ({ item }: WorkItemProps) => {
           >
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">{item.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
-              {item.tags.map((tag) => (
+              {item.tags.map((tag: string) => (
                 <span key={tag} className="px-3 py-1 bg-muted text-muted-foreground text-xs rounded-full">
                   {tag}
                 </span>
@@ -98,4 +98,4 @@ const WorkItem = ({ item }: WorkItemProps) => {
   );
 };
 
-export default WorkItem;
+
