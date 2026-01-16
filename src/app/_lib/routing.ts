@@ -1,13 +1,6 @@
 import { createNavigation } from 'next-intl/navigation';
 import { defineRouting } from 'next-intl/routing';
-
-export enum Locale {
-  EN = 'en',
-  PT_BR = 'pt-br',
-}
-
-export const LOCALES = [Locale.EN, Locale.PT_BR] as const;
-export const DEFAULT_LOCALE = Locale.EN;
+import { Locale, LOCALES, DEFAULT_LOCALE } from '@/core/domain/Locale';
 
 export const routing = defineRouting({
   // A list of all locales that are supported

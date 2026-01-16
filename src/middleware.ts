@@ -1,6 +1,7 @@
 import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import { routing } from './app/_lib/routing';
 import { NextRequest, NextResponse } from 'next/server';
+import { isValidLocale } from '@/core/domain/Locale';
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -18,7 +19,7 @@ export default function middleware(req: NextRequest) {
 
   // If it's locale-like but not supported, redirect to root to avoid nesting
   // (e.g., /es, /pt-bra, /ens)
-  if (isLocaleLike && !routing.locales.includes(firstSegment as any)) {
+  if (isLocaleLike && !isValidLocale(firstSegment || '')) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 

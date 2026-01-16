@@ -1,27 +1,30 @@
-import Hero from "@/app/_components/Hero";
-import WorkSidebar from "@/app/_components/WorkSidebar";
-import Experience from "@/app/_components/Experience";
-import Contact from "@/app/_components/Contact";
-import Footer from "@/app/_components/Footer";
-import FloatingControls from "@/app/_components/FloatingControls";
-import GeometricBackground from "@/app/_components/GeometricBackground";
+import Hero from '@/app/_components/Hero';
+import WorkSidebar from '@/app/_components/WorkSidebar';
+import Experience from '@/app/_components/Experience';
+import Contact from '@/app/_components/Contact';
+import Footer from '@/app/_components/Footer';
+import FloatingControls from '@/app/_components/FloatingControls';
+import GeometricBackground from '@/app/_components/GeometricBackground';
 
 import PublicWorkErrorBoundary from '@/app/_components/PublicWorkErrorBoundary';
-import { GetPublicWorkUseCase, PublicWorkItem } from '@/use-cases/GetPublicWorkUseCase';
-import { GitHubRepositoryRest } from '@/adapters/repositories/GitHubRepositoryRest';
-import { NotionRepositoryRest } from '@/adapters/repositories/NotionRepositoryRest';
-import { CertificationRepositoryJson } from '@/adapters/repositories/CertificationRepositoryJson';
+import {
+  PublicWorkApplicationService,
+  PublicWorkItem,
+} from '@/core/application-services/PublicWorkApplicationService';
+import { GitHubRepositoryRest } from '@/core/infrastructure/GitHubRepositoryRest';
+import { NotionRepositoryRest } from '@/core/infrastructure/NotionRepositoryRest';
+import { CertificationRepositoryJson } from '@/core/infrastructure/CertificationRepositoryJson';
 
 export default async function Home() {
   let workItems: PublicWorkItem[] = [];
   let workError = false;
   try {
-    const useCase = new GetPublicWorkUseCase(
+    const useCase = new PublicWorkApplicationService(
       new GitHubRepositoryRest(),
       new NotionRepositoryRest(),
       new CertificationRepositoryJson()
     );
-    workItems = await useCase.execute();
+    workItems = await useCase.getAll();
   } catch (err) {
     console.error('Failed to load public work items:', err);
     workError = true;
@@ -37,7 +40,7 @@ export default async function Home() {
         <main className="flex-1 md:w-[calc(100%-var(--work-sidebar-width))] mt-24 md:pr-10">
           <Hero />
           <Experience />
-          
+
           {/* Work Sidebar - Regular section on mobile, right after experience */}
           <div className="md:hidden">
             <PublicWorkErrorBoundary hasError={workError}>
