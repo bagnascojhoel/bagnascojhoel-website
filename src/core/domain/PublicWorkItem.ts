@@ -1,5 +1,8 @@
 import { Article } from './Article';
 import { Certification } from './Certification';
 import { Project } from './Project';
+import { WorkItemType } from './WorkItemType';
 
-export type PublicWorkItem = Project | Article | Certification;
+type _PublicWorkItem = { workItemType: WorkItemType };
+
+export type PublicWorkItem = _PublicWorkItem & (Project | Article | Certification);

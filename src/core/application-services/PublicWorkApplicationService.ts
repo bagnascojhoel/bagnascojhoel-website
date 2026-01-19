@@ -1,51 +1,87 @@
 import { inject, injectable } from 'inversify';
 import { Certification } from '@/core/domain/Certification';
-import type { GitHubRepository } from '@/core/domain/GitHubRepository';
+import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { NotionRepository } from '@/core/domain/NotionRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
-import { GitHubRepositoryToken } from '@/core/domain/GitHubRepository';
+import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
-import { ProjectFactory } from '@/core/domain/ProjectFactory';
+import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import { ArticleFactory } from '@/core/domain/ArticleFactory';
 import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
-import { GitHubCodeRepository } from '@/core/domain/GitHubCodeRepository';
+import { GithubCodeRepository } from '@/core/domain/GithubCodeRepository';
 import { NotionPage } from '@/core/domain/NotionPage';
+
+const GITHUB_CODE_REPOSITORIES_IDX = 0;
+const NOTION_PAGES_IDX = 1;
+const CERTIFICATIONS_IDX = 2;
 
 @injectable()
 export class PublicWorkApplicationService {
+  private cache: { timestamp: number; items: PublicWorkItem[] } | null = null;
+  private readonly cacheTtlMs: number = Number(process.env.PUBLIC_WORK_CACHE_TTL_MS || 3600000);
+
   constructor(
-    @inject(GitHubRepositoryToken) private githubRepo: GitHubRepository,
-    @inject(NotionRepositoryToken) private notionRepo: NotionRepository,
-    @inject(CertificationRepositoryToken) private certificationRepo: CertificationRepository
+    @inject(GithubRepositoryToken) private githubRepository: GithubRepository,
+    @inject(NotionRepositoryToken) private notionRepository: NotionRepository,
+    @inject(CertificationRepositoryToken) private certificationRepository: CertificationRepository,
+    @inject(ProjectFactoryToken)
+    private projectFactory: ProjectFactory
   ) {}
 
   async getAll(): Promise<PublicWorkItem[]> {
-    const results = await Promise.allSettled([
-      this.githubRepo.fetchRepositories(),
-      this.notionRepo.fetchPages(),
-      this.certificationRepo.fetchCertifications(),
+    const now = Date.now();
+    if (this.cache && now - this.cache.timestamp < this.cacheTtlMs) {
+      // eslint-disable-next-line no-console
+      console.debug('PublicWork cache hit');
+      return this.cache.items;
+    }
+
+    // Fetch repositories, pages, certifications and extras in parallel
+    const fetches: PromiseSettledResult<unknown>[] = await Promise.allSettled([
+      this.githubRepository.fetchRepositories(),
+      this.notionRepository.fetchPages(),
+      this.certificationRepository.fetchCertifications(),
     ]);
 
-    const githubRes = results[0];
-    const notionRes = results[1];
-    const certsRes = results[2];
+    const result: PublicWorkItem[] = [];
 
-    const projects = this.isFullfilled(githubRes)
-      ? ProjectFactory.fromGitHubRepositories(
-          (githubRes as PromiseFulfilledResult<GitHubCodeRepository[]>).value
+    if (this.isFullfilled(fetches[GITHUB_CODE_REPOSITORIES_IDX])) {
+      const githubRepositories: PromiseFulfilledResult<GithubCodeRepository[]> = fetches[
+        GITHUB_CODE_REPOSITORIES_IDX
+      ] as PromiseFulfilledResult<GithubCodeRepository[]>;
+      const projects = this.projectFactory.createAll(githubRepositories.value);
+
+      result.push(...projects.map(r => ({ ...r, workItemType: 'project' } as PublicWorkItem)));
+    }
+
+    if (this.isFullfilled(fetches[NOTION_PAGES_IDX])) {
+      const notionPages: PromiseFulfilledResult<NotionPage[]> = fetches[
+        NOTION_PAGES_IDX
+      ] as PromiseFulfilledResult<NotionPage[]>;
+      const articles = ArticleFactory.fromNotionPages(notionPages.value);
+
+      result.push(...articles.map(p => ({ ...p, workItemType: 'article' } as PublicWorkItem)));
+    }
+
+    if (this.isFullfilled(fetches[CERTIFICATIONS_IDX])) {
+      const certifications: PromiseFulfilledResult<Certification[]> = fetches[
+        CERTIFICATIONS_IDX
+      ] as PromiseFulfilledResult<Certification[]>;
+
+      result.push(
+        ...certifications.value.map(
+          c => ({ ...c, workItemType: 'certification' } as PublicWorkItem)
         )
-      : [];
+      );
+    }
 
-    const articles = this.isFullfilled(notionRes)
-      ? ArticleFactory.fromNotionPages((notionRes as PromiseFulfilledResult<NotionPage[]>).value)
-      : [];
+    // cache result
+    this.cache = { timestamp: now, items: result };
+    // eslint-disable-next-line no-console
+    console.debug('PublicWork cache updated');
 
-    const certs = this.isFullfilled(certsRes)
-      ? (certsRes as PromiseFulfilledResult<Certification[]>).value
-      : [];
-
-    return [...projects, ...articles, ...certs];
+    return result;
   }
 
   private isFullfilled<T>(result: PromiseSettledResult<T>): boolean {

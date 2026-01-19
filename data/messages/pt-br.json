@@ -14,19 +14,23 @@
     "items": {
       "adp-senior": {
         "title": "Desenvolvedor de Software Sênior",
-        "description": "Trabalhando com Java 21 e Spring Boot, integrando o mais recente mecanismo de folha de pagamento empresarial com produtos existentes e MFEs incorporados."
+        "description": "Trabalhando com Java 21 e Spring Boot, integrando o mais recente mecanismo de folha de pagamento empresarial com produtos existentes e MFEs incorporados.",
+        "period": "Dezembro 2024 - "
       },
       "petlove": {
         "title": "Desenvolvedor Full-Stack Sênior",
-        "description": "Aprimorei um ERP multi-tenancy para Petlove e Clientes SaaS. Mantive o sistema monolítico legado e liderei sua modernização com microsserviços usando Java (8 e 11), Spring Boot, JSF, Vue 3 e Google Cloud Platform."
+        "description": "Aprimorei um ERP multi-tenancy para Petlove e Clientes SaaS. Mantive o sistema monolítico legado e liderei sua modernização com microsserviços usando Java (8 e 11), Spring Boot, JSF, Vue 3 e Google Cloud Platform.",
+        "period": "Abril 2024 - Dezembro 2024"
       },
       "adp-backend": {
         "title": "Desenvolvedor Backend",
-        "description": "Desenvolvi microsserviços com Java 17 e Spring Boot usando BDD, DDD e arquitetura de Portas e Adaptadores. Implementei um recurso de busca de texto multi-idioma."
+        "description": "Desenvolvi microsserviços com Java 17 e Spring Boot usando BDD, DDD e arquitetura de Portas e Adaptadores. Implementei um recurso de busca de texto multi-idioma.",
+        "period": "Junho 2022 - Abril 2024"
       },
       "cwi": {
         "title": "Desenvolvedor Backend",
-        "description": "Liderei o desenvolvimento de um sistema de análise de dados de usuários em tempo real para um provedor de telecomunicações para entender o comportamento dos usuários na página do cliente."
+        "description": "Liderei o desenvolvimento de um sistema de análise de dados de usuários em tempo real para um provedor de telecomunicações para entender o comportamento dos usuários na página do cliente.",
+        "period": "Julho 2021 - Junho 2022"
       }
     }
   },
@@ -41,10 +45,15 @@
   "Work": {
     "title": "Trabalhos Públicos",
     "subtitle": "Seleção de alguns estudos, artigos e projetos de código aberto.",
-    "viewProject": "Ver Projeto"
+    "viewProject": "Ver Projeto",
+    "type": {
+      "article": "Artigo",
+      "certification": "Certificação",
+      "project": "Projeto"
+    }
   },
   "Footer": {
-    "madeBy": "feito por mim com"
+    "madeBy": "feito por mim, com"
   },
   "Common": {
     "toggleTheme": "Alternar tema",

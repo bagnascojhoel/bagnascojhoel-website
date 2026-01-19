@@ -1,8 +1,7 @@
-import { WorkItemType } from './entities/Project';
+import { WorkItemType } from '@/core/domain/WorkItemType';
 
 export interface Article {
   id: string;
-  type: WorkItemType; // 'Article'
   title: string;
   description: string;
   tags: string[];

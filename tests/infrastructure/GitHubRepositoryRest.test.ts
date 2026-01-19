@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { GitHubRepositoryRest } from '../../src/core/infrastructure/GitHubRepositoryRest';
+import { GithubRepositoryRest } from '../../src/core/infrastructure/GithubRepositoryRest';
 
 describe('GitHubRepositoryRest', () => {
-  let repository: GitHubRepositoryRest;
+  let repository: GithubRepositoryRest;
 
   beforeEach(() => {
-    repository = new GitHubRepositoryRest();
+    repository = new GithubRepositoryRest();
   });
 
   describe('fetchRepositories', () => {

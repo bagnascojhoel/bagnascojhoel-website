@@ -3,7 +3,6 @@ import type { Certification } from '../../src/core/domain/Certification';
 
 export const mockCertification1: Certification = {
   id: 'cert-1',
-  type: 'Certification',
   title: 'AWS Certified Solutions Architect - Associate',
   description:
     'Comprehensive certification covering AWS services, architecture design patterns, and cloud best practices.',
@@ -13,7 +12,6 @@ export const mockCertification1: Certification = {
 
 export const mockCertification2: Certification = {
   id: 'cert-2',
-  type: 'Certification',
   title: 'Oracle Certified Professional: Java SE 11 Developer',
   description:
     'Advanced Java certification covering modern Java features, concurrency, and best practices.',

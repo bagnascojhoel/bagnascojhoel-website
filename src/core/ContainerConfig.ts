@@ -1,16 +1,17 @@
 import { Container } from 'inversify';
 import type { LocalizedMessagesRepository } from '@/core/domain/LocalizedMessagesRepository';
-import type { GitHubRepository } from '@/core/domain/GitHubRepository';
+import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { NotionRepository } from '@/core/domain/NotionRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
 import { LocalizedMessagesRepositoryToken } from '@/core/domain/LocalizedMessagesRepository';
-import { GitHubRepositoryToken } from '@/core/domain/GitHubRepository';
+import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LocalizedMessagesRepositoryJson } from '@/core/infrastructure/LocalizedMessagesRepositoryJson';
-import { GitHubRepositoryRest } from '@/core/infrastructure/GitHubRepositoryRest';
+import { GithubRepositoryRest } from '@/core/infrastructure/GithubRepositoryRest';
 import { NotionRepositoryJson } from '@/core/infrastructure/NotionRepositoryJson';
 import { CertificationRepositoryJson } from '@/core/infrastructure/CertificationRepositoryJson';
+import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import {
   LocalizationApplicationService,
   LocalizationApplicationServiceToken,
@@ -25,11 +26,12 @@ const container = new Container();
 container
   .bind<LocalizedMessagesRepository>(LocalizedMessagesRepositoryToken)
   .to(LocalizedMessagesRepositoryJson);
-container.bind<GitHubRepository>(GitHubRepositoryToken).to(GitHubRepositoryRest);
+container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRest);
 container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJson);
 container
   .bind<CertificationRepository>(CertificationRepositoryToken)
   .to(CertificationRepositoryJson);
+container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
 
 // application-service bindings
 

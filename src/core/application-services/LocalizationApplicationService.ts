@@ -9,7 +9,7 @@ export class LocalizationApplicationService {
     private messagesRepository: LocalizedMessagesRepository
   ) {}
 
-  public async getLocalizedMessages(locale: string): Promise<Record<string, any>> {
+  public async getLocalizedMessages(locale: string): Promise<Record<string, unknown>> {
     return await this.messagesRepository.loadMessages(locale);
   }
 }

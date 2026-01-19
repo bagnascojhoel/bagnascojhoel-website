@@ -14,19 +14,23 @@
     "items": {
       "adp-senior": {
         "title": "Senior Software Developer",
-        "description": "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs."
+        "description": "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs.",
+        "period": "December 2024 - "
       },
       "petlove": {
         "title": "Senior Full-Stack Developer",
-        "description": "Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform."
+        "description": "Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform.",
+        "period": "April 2024 - December 2024"
       },
       "adp-backend": {
         "title": "Backend Developer",
-        "description": "Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature."
+        "description": "Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature.",
+        "period": "June 2022 - April 2024"
       },
       "cwi": {
         "title": "Backend Developer",
-        "description": "Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page."
+        "description": "Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page.",
+        "period": "July 2021 - June 2022"
       }
     }
   },
@@ -41,10 +45,15 @@
   "Work": {
     "title": "Public Work",
     "subtitle": "A curated selection of studies, articles, and open-source projects.",
-    "viewProject": "View Project"
+    "viewProject": "View Project",
+    "type": {
+      "article": "Article",
+      "certification": "Certification",
+      "project": "Project"
+    }
   },
   "Footer": {
-    "madeBy": "made by me with"
+    "madeBy": "made by me, with"
   },
   "Common": {
     "toggleTheme": "Toggle theme",

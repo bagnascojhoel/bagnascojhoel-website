@@ -1,0 +1,10 @@
+{
+  "repositoryId": "101",
+  "title": "Awesome Project (Custom)",
+  "description": "A longer, more friendly description for the project that replaces the GitHub description when missing.",
+  "tags": ["custom", "portfolio"],
+  "websiteUrl": "https://awesome.example.com",
+  "complexity": "high",
+  "startsOpen": false,
+  "showEvenArchived": false
+}

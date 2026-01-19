@@ -3,7 +3,6 @@ import type { Article } from '../../src/core/domain/Article';
 
 export const mockArticle1: Article = {
   id: 'article-1',
-  type: 'Article',
   title: 'Building Scalable APIs',
   description: 'A guide to designing scalable REST APIs',
   tags: ['API', 'Backend', 'Architecture'],
@@ -13,7 +12,6 @@ export const mockArticle1: Article = {
 
 export const mockArticle2: Article = {
   id: 'article-2',
-  type: 'Article',
   title: 'Introduction to TypeScript',
   description: 'Getting started with TypeScript for beginners',
   tags: ['TypeScript', 'JavaScript'],

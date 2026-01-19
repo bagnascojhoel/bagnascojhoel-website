@@ -34,3 +34,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Extra portfolio descriptions
+
+- The site supports optional `.portfolio-description.json` files in individual GitHub repositories to provide richer metadata for projects (custom title, tags, website, complexity, etc.).
+- See `.ai/features/github-extra-descriptions/SCHEMA.md` for the schema and examples.
+
+## Project Improvements
+
+- Localization in PT-BR of months on Experience section. And localization of projects.
+- The ADRs are beign venerated too verbosely. And other files, besides the ADR, were created.
+- The implementation plans are not being split amongst files.
+- Add sentry for logging and error tracking

@@ -3,7 +3,7 @@ import { LocalizedMessagesRepository } from '@/core/domain/LocalizedMessagesRepo
 
 @injectable()
 export class LocalizedMessagesRepositoryJson implements LocalizedMessagesRepository {
-  async loadMessages(locale: string): Promise<Record<string, any>> {
+  async loadMessages(locale: string): Promise<Record<string, unknown>> {
     return (await import(`../../../data/messages/${locale}.json`)).default;
   }
 }

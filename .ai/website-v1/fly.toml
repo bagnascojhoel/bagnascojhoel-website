@@ -1,0 +1,29 @@
+# fly.toml app configuration file generated for portfolio-website-bff on 2023-08-12T11:28:28-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "portfolio-website-bff"
+primary_region = "gru"
+
+[build]
+image = "portfolio-website-bff:latest"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 1
+processes = ["app"]
+
+[http_service.concurrency]
+type = "requests"
+hard_limit = 200
+
+[[http_service.checks]]
+grace_period = "20s"
+interval = "10m"
+method = "GET"
+path = "/api/actuator/health"
+timeout = "5s"

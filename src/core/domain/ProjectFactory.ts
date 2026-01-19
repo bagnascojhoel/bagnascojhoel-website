@@ -1,21 +1,24 @@
-import { Project } from '@/core/domain/Project';
-import { GitHubCodeRepository } from '@/core/domain/GitHubCodeRepository';
+import { Project, ProjectBuilder } from '@/core/domain/Project';
+import { GithubCodeRepository } from '@/core/domain/GithubCodeRepository';
 
 export class ProjectFactory {
-  static fromGitHubRepository(repo: GitHubCodeRepository): Project {
-    return {
-      id: `gh-${repo.id}`,
-      type: 'Project',
-      title: repo.name,
-      description: repo.description || 'No description provided',
-      tags: repo.topics && repo.topics.length ? repo.topics : repo.language ? [repo.language] : [],
-      link: repo.htmlUrl,
-      createdAt: repo.createdAt,
-      updatedAt: repo.updatedAt,
-    };
+  create(repo: GithubCodeRepository): Project {
+    return new ProjectBuilder()
+      .withId(`gh-${repo.id}`)
+      .withTitle(repo.name)
+      .withDescription(repo.description || 'No description provided')
+      .withTags(
+        repo.topics && repo.topics.length ? repo.topics : repo.language ? [repo.language] : []
+      )
+      .withLink(repo.htmlUrl)
+      .withCreatedAt(repo.createdAt)
+      .withUpdatedAt(repo.updatedAt)
+      .build();
   }
 
-  static fromGitHubRepositories(repos: GitHubCodeRepository[]): Project[] {
-    return repos.map(r => this.fromGitHubRepository(r));
+  public createAll(repos: GithubCodeRepository[]): Project[] {
+    return repos.map(r => this.create(r));
   }
 }
+
+export const ProjectFactoryToken = 'ProjectFactory';

@@ -4,28 +4,24 @@ import { useTranslations } from 'next-intl';
 const experiences = [
   {
     id: 'adp-senior',
-    period: 'December 2024 - ',
     titleKey: 'items.adp-senior.title',
     company: 'ADP Brazil Labs',
     descriptionKey: 'items.adp-senior.description',
   },
   {
     id: 'petlove',
-    period: 'April 2024 - December 2024',
     titleKey: 'items.petlove.title',
     company: 'Petlove',
     descriptionKey: 'items.petlove.description',
   },
   {
     id: 'adp-backend',
-    period: 'June 2022 - April 2024',
     titleKey: 'items.adp-backend.title',
     company: 'ADP Brazil Labs',
     descriptionKey: 'items.adp-backend.description',
   },
   {
     id: 'cwi',
-    period: 'July 2021 - June 2022',
     titleKey: 'items.cwi.title',
     company: 'CWI Software',
     descriptionKey: 'items.cwi.description',
@@ -54,7 +50,7 @@ const Experience = () => {
 
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-mono text-muted-foreground">
-                  {exp.id === 'adp-senior' ? `${exp.period}${t('present')}` : exp.period}
+                  {exp.id === 'adp-senior' ? `${t(`items.${exp.id}.period`)}${t('present')}` : t(`items.${exp.id}.period`)}
                 </p>
                 <h3 className="text-xl font-bold font-mono text-foreground">{t(exp.titleKey)}</h3>
                 <p className="text-primary font-medium">{exp.company}</p>

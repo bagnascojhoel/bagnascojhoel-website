@@ -1,7 +1,7 @@
 import React from 'react';
 import WorkItem from './WorkItem';
 import { getTranslations } from 'next-intl/server';
-import { PublicWorkItem } from '@/core/application-services/PublicWorkApplicationService';
+import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
 
 interface WorkSidebarProps {
   items?: PublicWorkItem[];

@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  servlet.context-path: /api
+  tomcat:
+    threads:
+      max: 5
+
+spring.banner.location: classpath:/startup-banner.txt
+
+project:
+  scheduling:
+    enabled: ${project.cache.enabled}
+    initial-delay:
+      load-projects: PT5S
+    fixed-delay:
+      load-projects: PT6H6S
+      evict-projects: PT6H5S
+  cache:
+    enabled: true
+  github:
+    scheme: https
+    host: api.github.com
+    project-description-file: portfolio-description.json
+    username: bagnascojhoel
+    app-id: 375399
+
+#logging:
+#  level:
+#    root: DEBUG

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Layers, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PublicWorkItem } from '@/core/application-services/PublicWorkApplicationService';
+import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
 import { useTranslations } from 'next-intl';
 
 interface WorkItemProps {
@@ -38,7 +38,7 @@ const WorkItem = ({ item }: WorkItemProps) => {
         layout
         className="block text-xs font-mono font-medium uppercase tracking-wider text-primary mb-1"
       >
-        {item.type}
+        {t(`type.${item.workItemType}`)}
       </motion.span>
 
       <motion.h3
