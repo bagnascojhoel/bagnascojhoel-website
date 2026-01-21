@@ -4,9 +4,11 @@ import { NotionPage } from '@/core/domain/NotionPage';
 import type { Logger } from '@/core/domain/Logger';
 import { LoggerToken } from '@/core/domain/Logger';
 import articlesData from '../../../data/articles.json';
+import articlesDataV2 from '../../../data/articles-v2.json';
+import { Article } from '../domain/Article';
 
 @injectable()
-export class NotionRepositoryJson implements NotionRepository {
+export class NotionRepositoryJsonAdapter implements NotionRepository {
   constructor(@inject(LoggerToken) private logger: Logger) {}
 
   async fetchPages(): Promise<NotionPage[]> {
@@ -19,5 +21,9 @@ export class NotionRepositoryJson implements NotionRepository {
       );
       return [];
     }
+  }
+
+  async fetchArticles(): Promise<Article[]> {
+    return articlesDataV2 as Article[];
   }
 }

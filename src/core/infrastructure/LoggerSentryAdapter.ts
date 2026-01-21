@@ -9,7 +9,7 @@ import { Logger } from '@/core/domain/Logger';
  * Should be used in production environments.
  */
 @injectable()
-export class LoggerSentry implements Logger {
+export class LoggerSentryAdapter implements Logger {
   error(error: Error, context?: Record<string, unknown>): void {
     if (context) {
       Sentry.setContext('error_context', context);

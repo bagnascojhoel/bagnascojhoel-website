@@ -9,7 +9,7 @@ import { LoggerToken } from '@/core/domain/Logger';
 const EXTRA_PORTFOLIO_DESCRIPTION_PATH = 'portfolio-description.json';
 
 @injectable()
-export class GithubRepositoryRest implements GithubRepository {
+export class GithubRepositoryRestAdapter implements GithubRepository {
   private readonly username = 'bagnascojhoel';
   private readonly baseUrl = 'https://api.github.com';
   private token = process.env.GITHUB_TOKEN;

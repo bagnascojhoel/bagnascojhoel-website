@@ -16,6 +16,7 @@ export class ProjectFactory {
       .build();
   }
 
+  // deprecated
   public createAll(repos: GithubCodeRepository[]): Project[] {
     return repos.map(r => this.create(r));
   }

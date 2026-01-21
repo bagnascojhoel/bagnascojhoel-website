@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { CertificationRepositoryJson } from '../../src/core/infrastructure/CertificationRepositoryJson';
+import { CertificationRepositoryJsonAdapter } from '../../src/core/infrastructure/CertificationRepositoryJsonAdapter';
 
 describe('CertificationRepositoryJson', () => {
-  let repository: CertificationRepositoryJson;
+  let repository: CertificationRepositoryJsonAdapter;
 
   beforeEach(() => {
-    repository = new CertificationRepositoryJson();
+    repository = new CertificationRepositoryJsonAdapter();
   });
 
   describe('fetchCertifications', () => {

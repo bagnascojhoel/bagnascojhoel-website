@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { LocalizedMessagesRepositoryJson } from '../../src/core/infrastructure/LocalizedMessagesRepositoryJson';
+import { LocalizedMessagesRepositoryJsonAdapter } from '../../src/core/infrastructure/LocalizedMessagesRepositoryJson';
 
 describe('LocalizedMessagesRepositoryJson', () => {
-  let repository: LocalizedMessagesRepositoryJson;
+  let repository: LocalizedMessagesRepositoryJsonAdapter;
 
   beforeEach(() => {
-    repository = new LocalizedMessagesRepositoryJson();
+    repository = new LocalizedMessagesRepositoryJsonAdapter();
   });
 
   describe('loadMessages', () => {

@@ -9,12 +9,12 @@ import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LoggerToken } from '@/core/domain/Logger';
-import { LocalizedMessagesRepositoryJson } from '@/core/infrastructure/LocalizedMessagesRepositoryJson';
-import { GithubRepositoryRest } from '@/core/infrastructure/GithubRepositoryRest';
-import { NotionRepositoryJson } from '@/core/infrastructure/NotionRepositoryJson';
-import { CertificationRepositoryJson } from '@/core/infrastructure/CertificationRepositoryJson';
-import { LoggerSentry } from '@/core/infrastructure/LoggerSentry';
-import { LoggerConsole } from '@/core/infrastructure/LoggerConsole';
+import { LocalizedMessagesRepositoryJsonAdapter } from '@/core/infrastructure/LocalizedMessagesRepositoryJson';
+import { GithubRepositoryRestAdapter } from '@/core/infrastructure/GithubRepositoryRestAdapter';
+import { NotionRepositoryJsonAdapter } from '@/core/infrastructure/NotionRepositoryJsonAdapter';
+import { CertificationRepositoryJsonAdapter } from '@/core/infrastructure/CertificationRepositoryJsonAdapter';
+import { LoggerSentryAdapter } from '@/core/infrastructure/LoggerSentryAdapter';
+import { LoggerConsoleAdapter } from '@/core/infrastructure/LoggerConsoleAdapter';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import {
   LocalizationApplicationService,
@@ -24,6 +24,10 @@ import {
   PublicWorkApplicationService,
   PublicWorkApplicationServiceToken,
 } from '@/core/application-services/PublicWorkApplicationService';
+import {
+  GetPublicWorkItemsService,
+  GetPublicWorkItemsServiceToken,
+} from './domain/GetPublicWorkItemsService';
 
 const container = new Container();
 
@@ -31,21 +35,26 @@ const container = new Container();
 const isProduction = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
+// domain bindings
+container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+container
+  .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+  .to(GetPublicWorkItemsService);
+
 // repository bindings
 container
   .bind<LocalizedMessagesRepository>(LocalizedMessagesRepositoryToken)
-  .to(LocalizedMessagesRepositoryJson);
-container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRest);
-container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJson);
+  .to(LocalizedMessagesRepositoryJsonAdapter);
+container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRestAdapter);
+container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJsonAdapter);
 container
   .bind<CertificationRepository>(CertificationRepositoryToken)
-  .to(CertificationRepositoryJson);
-container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+  .to(CertificationRepositoryJsonAdapter);
 
 // logger binding - use Sentry in production, Console in dev/test
 container
   .bind<Logger>(LoggerToken)
-  .to(isProduction && !isTest ? LoggerSentry : LoggerConsole)
+  .to(isProduction && !isTest ? LoggerSentryAdapter : LoggerConsoleAdapter)
   .inSingletonScope();
 
 // application-service bindings

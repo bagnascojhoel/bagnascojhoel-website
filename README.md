@@ -40,9 +40,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - The site supports optional `.portfolio-description.json` files in individual GitHub repositories to provide richer metadata for projects (custom title, tags, website, complexity, etc.).
 - See `.ai/features/github-extra-descriptions/SCHEMA.md` for the schema and examples.
 
-## Project Improvements
+## To Do's
 
-- Localization in PT-BR of months on Experience section. And localization of projects.
-- The ADRs are beign venerated too verbosely. And other files, besides the ADR, were created.
+- Certifications and articles should be retrieved dynamically without needing a redeploy.
+- Certifications should have a link to the certification badge/certificate.
+- Should localize the action labels for certifications and articles.
+- Use the startsOpen flag from portfolio-description.json.
+- Introduce a ignore flag on portfolio-description.json that makes the project ignored.
+- Update project README.
+- Localization in PT-BR of projects.
+- Add google analytics or similar to track accesses.
+- Links from articles should take to the actual article.
+- The ADRs are beign generated too verbosely. And other files, besides the ADR, were created.
 - The implementation plans are not being split amongst files.
-- Add sentry for logging and error tracking

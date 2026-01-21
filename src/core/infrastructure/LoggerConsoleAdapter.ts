@@ -8,7 +8,7 @@ import { Logger } from '@/core/domain/Logger';
  * Should be used in non-production environments or tests.
  */
 @injectable()
-export class LoggerConsole implements Logger {
+export class LoggerConsoleAdapter implements Logger {
   private breadcrumbs: Array<{
     message: string;
     data?: Record<string, unknown>;

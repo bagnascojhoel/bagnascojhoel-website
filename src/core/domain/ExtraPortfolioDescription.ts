@@ -8,4 +8,5 @@ export interface ExtraPortfolioDescription {
   complexity?: Complexity;
   startsOpen?: boolean;
   showEvenArchived?: boolean;
+  isHidden?: boolean;
 }

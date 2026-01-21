@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { describe, it, expect, beforeEach } from 'vitest';
-import { NotionRepositoryJson } from '../../src/core/infrastructure/NotionRepositoryJson';
+import { NotionRepositoryJsonAdapter } from '../../src/core/infrastructure/NotionRepositoryJsonAdapter';
 
 describe('NotionRepositoryJson', () => {
-  let repository: NotionRepositoryJson;
+  let repository: NotionRepositoryJsonAdapter;
 
   beforeEach(() => {
-    repository = new NotionRepositoryJson();
+    repository = new NotionRepositoryJsonAdapter();
   });
 
   describe('fetchPages', () => {

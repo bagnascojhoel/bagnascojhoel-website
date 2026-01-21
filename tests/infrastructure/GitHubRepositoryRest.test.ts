@@ -4,7 +4,7 @@
 import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { GithubRepositoryRest } from '../../src/core/infrastructure/GithubRepositoryRest';
+import { GithubRepositoryRestAdapter } from '../../src/core/infrastructure/GithubRepositoryRestAdapter';
 import { MockLogger } from '../fixtures/mockLogger';
 
 // Mock GitHub API response
@@ -51,14 +51,14 @@ const server = setupServer(
 );
 
 describe('GitHubRepositoryRest', () => {
-  let repository: GithubRepositoryRest;
+  let repository: GithubRepositoryRestAdapter;
 
   beforeAll(() => {
     server.listen({ onUnhandledRequest: 'warn' });
   });
 
   beforeEach(() => {
-    repository = new GithubRepositoryRest(new MockLogger());
+    repository = new GithubRepositoryRestAdapter(new MockLogger());
   });
 
   afterEach(() => {

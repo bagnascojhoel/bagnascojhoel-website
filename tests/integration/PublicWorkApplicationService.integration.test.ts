@@ -6,9 +6,9 @@ import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { Container } from 'inversify';
 import { PublicWorkApplicationService } from '@/core/application-services/PublicWorkApplicationService';
-import { GithubRepositoryRest } from '@/core/infrastructure/GithubRepositoryRest';
-import { NotionRepositoryJson } from '@/core/infrastructure/NotionRepositoryJson';
-import { CertificationRepositoryJson } from '@/core/infrastructure/CertificationRepositoryJson';
+import { GithubRepositoryRestAdapter } from '@/core/infrastructure/GithubRepositoryRestAdapter';
+import { NotionRepositoryJsonAdapter } from '@/core/infrastructure/NotionRepositoryJsonAdapter';
+import { CertificationRepositoryJsonAdapter } from '@/core/infrastructure/CertificationRepositoryJsonAdapter';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import { MockLogger } from '../fixtures/mockLogger';
 import type { GithubRepository } from '@/core/domain/GithubRepository';
@@ -96,11 +96,11 @@ describe('PublicWorkApplicationService Integration Tests', () => {
       const container = new Container();
       const logger = new MockLogger();
 
-      container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRest);
-      container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJson);
+      container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRestAdapter);
+      container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJsonAdapter);
       container
         .bind<CertificationRepository>(CertificationRepositoryToken)
-        .to(CertificationRepositoryJson);
+        .to(CertificationRepositoryJsonAdapter);
       container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
       container.bind<Logger>(LoggerToken).toConstantValue(logger);
       container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
