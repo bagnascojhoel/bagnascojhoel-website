@@ -14,14 +14,15 @@ This project is used as the backend for frontend of my portfolio website.
 docker container run -v ~/workspaces/portfolio-website-monorepo/back:/resources -e PROJECT_GITHUB_PRIVATE_KEY_RESOURCE_PATH=file:/resources/bagnascojhoel-com-br.2023-08-21.private-key.der -p 8080:80 portfolio-website-bff
 ```
 
-- The applications requires a GitHub private key. You can define one with
-  either `project.github.private-key-resource-path` or `project.github.private-key-base-64`.
+- The applications requires a GitHub private key. You can define one with either
+  `project.github.private-key-resource-path` or `project.github.private-key-base-64`.
 
 ## Issues Along the Way
 
 ### JVM does not natively support .pem files
 
-When trying to decrypt a `.pem` key file in java, it does not read correctly. Thus, when you try to do something like:
+When trying to decrypt a `.pem` key file in java, it does not read correctly. Thus, when you try to
+do something like:
 
 ```java
         var keyFactory=getRSAFactory();
@@ -37,8 +38,10 @@ When trying to decrypt a `.pem` key file in java, it does not read correctly. Th
         }
 ```
 
-The snippet `keyFactory.generatePrivate(keySpec)` will throw an error because the `keySpec` was read from a `.pem` file.
-One approach is to use `BouncyCastle`, a third-party library that enables you to read `.pem` files. The other approach,
-which I followed in this project is to convert the `.pem` file into `.der`, which Java supports.
+The snippet `keyFactory.generatePrivate(keySpec)` will throw an error because the `keySpec` was read
+from a `.pem` file. One approach is to use `BouncyCastle`, a third-party library that enables you to
+read `.pem` files. The other approach, which I followed in this project is to convert the `.pem`
+file into `.der`, which Java supports.
 
-I got this information from [GitHub API for Java](https://github-api.kohsuke.org/githubappjwtauth.html) documentation.
+I got this information from
+[GitHub API for Java](https://github-api.kohsuke.org/githubappjwtauth.html) documentation.

@@ -11,7 +11,9 @@
 
 ## 🎯 What Problem Are We Solving?
 
-The current project listing is **too generic**—it just displays GitHub repository names and descriptions without customization. The Java version (website-v1) had a sophisticated system where each repository could have a `.portfolio-description.json` file with:
+The current project listing is **too generic**—it just displays GitHub repository names and
+descriptions without customization. The Java version (website-v1) had a sophisticated system where
+each repository could have a `.portfolio-description.json` file with:
 
 ✅ Custom project titles (e.g., "Kwik E-Commerce Platform" instead of "kwik-ecommerce")  
 ✅ Detailed descriptions (beyond GitHub's 160-char limit)  
@@ -278,12 +280,15 @@ Use **Zod** for runtime validation of `.portfolio-description.json`:
 ## 🗣️ Discussion Questions
 
 ❓ **Q1**: Should we implement this now or wait until we have UI components ready?  
-💡 **Recommendation**: Implement now (domain logic is independent). UI can consume enriched data later.
+💡 **Recommendation**: Implement now (domain logic is independent). UI can consume enriched data
+later.
 
 ❓ **Q2**: Is 1-hour cache revalidation acceptable, or should it be longer (e.g., 6 hours)?  
-💡 **Recommendation**: Start with 1 hour. Adjust based on monitoring (balance freshness vs. API usage).
+💡 **Recommendation**: Start with 1 hour. Adjust based on monitoring (balance freshness vs. API
+usage).
 
-❓ **Q3**: Should we create a GitHub Action to validate `.portfolio-description.json` files in CI/CD?  
+❓ **Q3**: Should we create a GitHub Action to validate `.portfolio-description.json` files in
+CI/CD?  
 💡 **Recommendation**: Yes! Add JSON Schema validation in each repo's CI to catch errors early.
 
 ❓ **Q4**: Should we support YAML in addition to JSON for `.portfolio-description.*`?  

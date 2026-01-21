@@ -1,19 +1,25 @@
 ---
-description: 'Create an implementation plan for an ADR with files to be changed and references to supporting documentation or existing files'
+description:
+  'Create an implementation plan for an ADR with files to be changed and references to supporting
+  documentation or existing files'
 agent: Architect
 ---
 
 # Write Implementation Plan for ADR
 
-Your goal is to create a reproducible implementation plan for a given ADR. The plan should outline all necessary changes to the codebase, including new files to be created, existing files to be modified, and references to supporting documentation or existing files that can serve as patterns.
+Your goal is to create a reproducible implementation plan for a given ADR. The plan should outline
+all necessary changes to the codebase, including new files to be created, existing files to be
+modified, and references to supporting documentation or existing files that can serve as patterns.
 
-Consider that the output document will be used by AI Agents to implement the changes and as support for future implementations. It will also be used by human reviewers to validate the implementation.
+Consider that the output document will be used by AI Agents to implement the changes and as support
+for future implementations. It will also be used by human reviewers to validate the implementation.
 
 ## Phase Architecture
 
 - Each phase must have measurable completion criteria
 - Tasks within phases must be executable in parallel unless dependencies are specified
-- All task descriptions must include specific file paths, function names, and exact implementation details
+- All task descriptions must include specific file paths, function names, and exact implementation
+  details
 - No task should require human interpretation or decision-making
 
 ## AI-Optimized Implementation Standards
@@ -30,12 +36,15 @@ Consider that the output document will be used by AI Agents to implement the cha
 
 - There are three types of tests: Component Tests, Integration Tests, and End-to-End Tests
 - **Component Tests** MUST test individual React components in isolation using React Testing Library
-- **Integration Tests** MUST test API routes, server actions, and data fetching logic while mocking external services
-- **End-to-End Tests** MUST validate happy-path scenarios using Playwright, testing the full user flow including SSR/hydration
+- **Integration Tests** MUST test API routes, server actions, and data fetching logic while mocking
+  external services
+- **End-to-End Tests** MUST validate happy-path scenarios using Playwright, testing the full user
+  flow including SSR/hydration
 - All tests MUST be comprehensive and cover all use cases described in the ADR
 - Tests MUST reference test fixtures/factories to be used for test data setup
 - Component and Integration tests MUST be written using TDD approach
-- E2E tests should validate the complete user experience including accessibility requirements from `.ai/ui-ux-rules.md`
+- E2E tests should validate the complete user experience including accessibility requirements from
+  `.ai/ui-ux-rules.md`
 
 ## SSR Considerations
 
@@ -48,12 +57,16 @@ Consider that the output document will be used by AI Agents to implement the cha
 
 ## Output
 
-You need to write a new markdown file named `<ADR-ID>.implementation-plan.md`, where `<ADR-ID>` is the ID of the ADR you are creating the implementation plan for. The file should be placed in the same directory as the ADR.
+You need to write a new markdown file named `<ADR-ID>.implementation-plan.md`, where `<ADR-ID>` is
+the ID of the ADR you are creating the implementation plan for. The file should be placed in the
+same directory as the ADR.
 
-<plan_style_guide>
-The below template defines the mandatory structure of the implementation plan file you need to generate.
+<plan_style_guide> The below template defines the mandatory structure of the implementation plan
+file you need to generate.
 
-There are some meta instructions on the template that you must NOT write in the final template, but rather follow their instructions while filling the sections they appear on. The meta instructions are:
+There are some meta instructions on the template that you must NOT write in the final template, but
+rather follow their instructions while filling the sections they appear on. The meta instructions
+are:
 
 - Optional: if a section should be or not included in the final plan
 - Content: guidelines you need to follow when filling the section

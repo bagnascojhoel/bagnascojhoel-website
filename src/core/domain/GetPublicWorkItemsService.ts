@@ -7,21 +7,21 @@ import type { GithubRepository } from './GithubRepository';
 import { LoggerToken } from './Logger';
 import type { Logger } from './Logger';
 import { ProjectFactory, ProjectFactoryToken } from './ProjectFactory';
-import { NotionRepositoryToken } from './NotionRepository';
-import type { NotionRepository } from './NotionRepository';
+import { ArticleRepositoryToken } from './ArticleRepository';
+import type { ArticleRepository } from './ArticleRepository';
 import { PublicWorkItem } from './PublicWorkItem';
 import { Article } from './Article';
 import { inject, injectable } from 'inversify';
 
 const GITHUB_CODE_REPOSITORIES_IDX = 0;
-const NOTION_PAGES_IDX = 1;
+const ARTICLES_IDX = 1;
 const CERTIFICATIONS_IDX = 2;
 
 @injectable()
 export class GetPublicWorkItemsService {
   constructor(
     @inject(GithubRepositoryToken) private githubRepository: GithubRepository,
-    @inject(NotionRepositoryToken) private notionRepository: NotionRepository,
+    @inject(ArticleRepositoryToken) private articleRepository: ArticleRepository,
     @inject(CertificationRepositoryToken) private certificationRepository: CertificationRepository,
     @inject(ProjectFactoryToken) private projectFactory: ProjectFactory,
     @inject(LoggerToken) private logger: Logger
@@ -29,8 +29,10 @@ export class GetPublicWorkItemsService {
 
   public async getAll(): Promise<PublicWorkItem[]> {
     const requests = await this.getRequests();
-    const projects = this.getGithubCodeRepositories(requests)
-      .map(this.projectFactory.create)
+    const projectRequests = this.getGithubCodeRepositories(requests).map(
+      this.projectFactory.create
+    );
+    const projects = (await Promise.all(projectRequests))
       .filter(p => p.isVisible())
       .map(this.labelWorkItemAs('project'));
     const articles = this.getArticles(requests).map(this.labelWorkItemAs('article'));
@@ -49,7 +51,7 @@ export class GetPublicWorkItemsService {
   > {
     return await Promise.allSettled([
       this.githubRepository.fetchRepositories(),
-      this.notionRepository.fetchArticles(),
+      this.articleRepository.fetchArticles(),
       this.certificationRepository.fetchCertifications(),
     ]);
   }
@@ -68,12 +70,12 @@ export class GetPublicWorkItemsService {
   }
 
   private getArticles(requests: PromiseSettledResult<unknown>[]): Article[] {
-    const notionRequest = requests[NOTION_PAGES_IDX];
-    if (this.isFullfilled(notionRequest)) {
-      return (notionRequest as PromiseFulfilledResult<Article[]>).value;
+    const articlesRequest = requests[ARTICLES_IDX];
+    if (this.isFullfilled(articlesRequest)) {
+      return (articlesRequest as PromiseFulfilledResult<Article[]>).value;
     }
-    this.logger.error(new Error('Failed to fetch Notion pages'), {
-      reason: notionRequest.status === 'rejected' ? notionRequest.reason : undefined,
+    this.logger.error(new Error('Failed to fetch articles'), {
+      reason: articlesRequest.status === 'rejected' ? articlesRequest.reason : undefined,
     });
     return [];
   }
@@ -111,4 +113,4 @@ export class GetPublicWorkItemsService {
   }
 }
 
-export const GetPublicWorkItemsServiceToken = 'GetPublicWorkItemsService';
+export const GetPublicWorkItemsServiceToken = Symbol.for('GetPublicWorkItemsService');

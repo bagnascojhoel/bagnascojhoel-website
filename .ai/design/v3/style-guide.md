@@ -2,7 +2,8 @@
 
 ## Design Philosophy
 
-Minimalist, clean, and professional design inspired by modern portfolio websites. Focus on typography, whitespace, and subtle interactions.
+Minimalist, clean, and professional design inspired by modern portfolio websites. Focus on
+typography, whitespace, and subtle interactions.
 
 ## Colors
 
@@ -29,7 +30,8 @@ Minimalist, clean, and professional design inspired by modern portfolio websites
 
 ### Font Families
 
-- **Sans-serif**: System font stack (-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif)
+- **Sans-serif**: System font stack (-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  'Helvetica Neue', sans-serif)
 - **Monospace**: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace
 
 ### Font Sizes

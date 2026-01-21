@@ -2,7 +2,8 @@
 
 ## Overview
 
-Successfully integrated Sentry for error tracking and logging with a clean architecture approach that keeps domain code independent from external frameworks.
+Successfully integrated Sentry for error tracking and logging with a clean architecture approach
+that keeps domain code independent from external frameworks.
 
 ## What Was Implemented
 
@@ -14,8 +15,10 @@ Created a domain interface that serves as a port for logging:
 
 Two adapters implemented:
 
-- [src/core/infrastructure/LoggerSentry.ts](../src/core/infrastructure/LoggerSentry.ts) - Production (Sentry)
-- [src/core/infrastructure/LoggerConsole.ts](../src/core/infrastructure/LoggerConsole.ts) - Development/Testing
+- [src/core/infrastructure/LoggerSentry.ts](../src/core/infrastructure/LoggerSentry.ts) - Production
+  (Sentry)
+- [src/core/infrastructure/LoggerConsole.ts](../src/core/infrastructure/LoggerConsole.ts) -
+  Development/Testing
 
 ### 2. **Dependency Injection Configuration**
 
@@ -244,7 +247,8 @@ All tests passing (83/83):
 ✅ **"Create a proxy/adapter/facade for logging"** - Logger interface (port) implemented  
 ✅ **"Avoid direct usages of sentry on domain code"** - Domain uses Logger interface  
 ✅ **"Centralized error handler"** - Error boundaries for client, try-catch for server  
-✅ **"One for client-side errors and other for server-side"** - global-error.tsx (client) + page try-catch (server)
+✅ **"One for client-side errors and other for server-side"** - global-error.tsx (client) + page
+try-catch (server)
 
 ---
 

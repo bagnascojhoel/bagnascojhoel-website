@@ -1,5 +1,7 @@
 ---
-description: This custom agent specializes in implementing frontend designs into codebases using best practices in HTML, CSS, and JavaScript/TypeScript.
+description:
+  This custom agent specializes in implementing frontend designs into codebases using best practices
+  in HTML, CSS, and JavaScript/TypeScript.
 argument-hint: Implement design V3...
 tools:
   [

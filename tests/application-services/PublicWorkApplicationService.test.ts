@@ -4,14 +4,18 @@ import { Container } from 'inversify';
 import { describe, it, expect, vi } from 'vitest';
 import { PublicWorkApplicationService } from '@/core/application-services/PublicWorkApplicationService';
 import type { GithubRepository } from '@/core/domain/GithubRepository';
-import type { NotionRepository } from '@/core/domain/NotionRepository';
+import type { ArticleRepository } from '@/core/domain/ArticleRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
 import type { Logger } from '@/core/domain/Logger';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
-import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
+import { ArticleRepositoryToken } from '@/core/domain/ArticleRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LoggerToken } from '@/core/domain/Logger';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
+import {
+  GetPublicWorkItemsService,
+  GetPublicWorkItemsServiceToken,
+} from '@/core/domain/GetPublicWorkItemsService';
 import { MockLogger } from '../fixtures/mockLogger';
 
 const mockGitHubRepo: GithubRepository = {
@@ -31,16 +35,15 @@ const mockGitHubRepo: GithubRepository = {
   ],
 };
 
-const mockNotionRepo: NotionRepository = {
-  fetchPages: async () => [
+const mockArticleRepo: ArticleRepository = {
+  fetchArticles: async () => [
     {
       id: 'p1',
       title: 'Article 1',
       description: 'desc',
-      url: 'https://notion.so/p1',
+      link: 'https://notion.so/p1',
       tags: ['x'],
       publishedAt: '2024-10-10T00:00:00Z',
-      status: 'published',
     },
   ],
 };
@@ -62,12 +65,15 @@ describe('PublicWorkApplicationService', () => {
   it('should return aggregated items when all repos succeed', async () => {
     const container = new Container();
     container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(mockGitHubRepo);
-    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+    container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
     container
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(mockCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
     container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+    container
+      .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+      .to(GetPublicWorkItemsService);
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
@@ -92,12 +98,15 @@ describe('PublicWorkApplicationService', () => {
     const mockLogger = new MockLogger();
     const container = new Container();
     container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(mockGitHubRepo);
-    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+    container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
     container
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(failingCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
     container.bind<Logger>(LoggerToken).toConstantValue(mockLogger);
+    container
+      .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+      .to(GetPublicWorkItemsService);
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
@@ -154,12 +163,15 @@ describe('PublicWorkApplicationService', () => {
     container
       .bind<GithubRepository>(GithubRepositoryToken)
       .toConstantValue(githubRepoWithEmptyDesc);
-    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+    container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
     container
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(mockCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
     container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+    container
+      .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+      .to(GetPublicWorkItemsService);
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
@@ -204,25 +216,23 @@ describe('PublicWorkApplicationService', () => {
       ],
     };
 
-    const multiItemNotionRepo: NotionRepository = {
-      fetchPages: async () => [
+    const multiItemArticleRepo: ArticleRepository = {
+      fetchArticles: async () => [
         {
           id: 'a1',
           title: 'Article 1',
           description: 'desc1',
-          url: 'https://notion.so/a1',
+          link: 'https://notion.so/a1',
           tags: ['x'],
           publishedAt: '2024-10-10T00:00:00Z',
-          status: 'published',
         },
         {
           id: 'a2',
           title: 'Article 2',
           description: 'desc2',
-          url: 'https://notion.so/a2',
+          link: 'https://notion.so/a2',
           tags: ['y'],
           publishedAt: '2024-10-11T00:00:00Z',
-          status: 'published',
         },
       ],
     };
@@ -250,12 +260,15 @@ describe('PublicWorkApplicationService', () => {
 
     const container = new Container();
     container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(multiItemGitHubRepo);
-    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(multiItemNotionRepo);
+    container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(multiItemArticleRepo);
     container
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(multiItemCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
     container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+    container
+      .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+      .to(GetPublicWorkItemsService);
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
@@ -307,12 +320,15 @@ describe('PublicWorkApplicationService', () => {
 
       const container = new Container();
       container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(githubRepo);
-      container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+      container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
       container
         .bind<CertificationRepository>(CertificationRepositoryToken)
         .toConstantValue(mockCertRepo);
       container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
       container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+      container
+        .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+        .to(GetPublicWorkItemsService);
       container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
       const uc = container.get(PublicWorkApplicationService);
@@ -352,12 +368,15 @@ describe('PublicWorkApplicationService', () => {
 
       const container = new Container();
       container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(githubRepo);
-      container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+      container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
       container
         .bind<CertificationRepository>(CertificationRepositoryToken)
         .toConstantValue(mockCertRepo);
       container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
       container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+      container
+        .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+        .to(GetPublicWorkItemsService);
       container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
       const uc = container.get(PublicWorkApplicationService);

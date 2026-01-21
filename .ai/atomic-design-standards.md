@@ -2,7 +2,8 @@
 
 ## Methodology Overview
 
-Atomic Design is a methodology for creating design systems. Break down interfaces into fundamental building blocks that can be reused across projects.
+Atomic Design is a methodology for creating design systems. Break down interfaces into fundamental
+building blocks that can be reused across projects.
 
 ## Hierarchy Levels
 

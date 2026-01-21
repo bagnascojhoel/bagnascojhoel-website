@@ -4,7 +4,8 @@ applyTo: *.html, *.css, *.js
 
 # Project Style Guide
 
-This document defines the visual language and design tokens for the Portfolio Website v2. It follows the [Atomic Design Standards](atomic-design-standards.md) and [UI/UX Rules](ui-ux-rules.md).
+This document defines the visual language and design tokens for the Portfolio Website v2. It follows
+the [Atomic Design Standards](atomic-design-standards.md) and [UI/UX Rules](ui-ux-rules.md).
 
 ## 1. Design Tokens
 
@@ -64,7 +65,8 @@ Based on an 8px grid system.
 
 ## 3. Mockup Implementation (PoC)
 
-The mockup will be implemented in a single `index.html` (or a small set of files) to demonstrate the layout and styling.
+The mockup will be implemented in a single `index.html` (or a small set of files) to demonstrate the
+layout and styling.
 
 ### Interactivity Goals
 

@@ -1,6 +1,7 @@
 # Sentry Integration Documentation
 
-This document describes the error logging and monitoring setup using Sentry in this Next.js application.
+This document describes the error logging and monitoring setup using Sentry in this Next.js
+application.
 
 ## Architecture Overview
 
@@ -374,7 +375,8 @@ container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
 
 ### Sentry Not Capturing Errors in Development
 
-This is expected. Check console logs instead. To test Sentry in development, temporarily set `NODE_ENV=production`.
+This is expected. Check console logs instead. To test Sentry in development, temporarily set
+`NODE_ENV=production`.
 
 ### Source Maps Not Uploading
 

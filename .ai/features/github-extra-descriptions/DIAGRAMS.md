@@ -582,7 +582,8 @@ flowchart TD
 
 ## Notes
 
-- All diagrams use **mermaid syntax** for easy rendering in Markdown viewers (GitHub, GitLab, VS Code with mermaid extension)
+- All diagrams use **mermaid syntax** for easy rendering in Markdown viewers (GitHub, GitLab, VS
+  Code with mermaid extension)
 - Colors follow consistent scheme:
   - **Blue** (#e1f5ff): Application Service layer
   - **Yellow** (#fff9c4): Domain layer

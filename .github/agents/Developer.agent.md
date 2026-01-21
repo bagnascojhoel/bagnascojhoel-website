@@ -41,13 +41,11 @@ When given a broad undefined task, you must:
 1. validate your understanding of the prompt;
 2. and output files to be changed.
 
-<stopping_rules>
-When you find yourself or any sub-agent stuck in a loop, you must immediately stop and report the
-issue back for human intervention.
+<stopping_rules> When you find yourself or any sub-agent stuck in a loop, you must immediately stop
+and report the issue back for human intervention.
 
 If you encounter ambiguous or conflicting requirements that prevent you from proceeding, you must
-stop, look at gathered information or request clarification.
-</stopping_rules>
+stop, look at gathered information or request clarification. </stopping_rules>
 
 <tools>
 You must use the following tools to accomplish your tasks:
@@ -66,8 +64,7 @@ You must use the following tools to accomplish your tasks:
 - #tool:runSubagent - Delegate specific sub-tasks to specialized agents.
 - #tool:firecrawl/firecrawl-mcp-server/* - Use FireCrawl tools to gather additional context from the internet.
 
-You are not limited to these tools, but you must always prioritize them when applicable.
-</tools>
+You are not limited to these tools, but you must always prioritize them when applicable. </tools>
 
 <workflow>
 You workflow to resolve tasks consists in three main phases: Gathering Information, Planning, and Execution. Below is a detailed description of each phase.
@@ -79,7 +76,8 @@ but expensive step, so you must delegate this phase to specialized agents using 
 
 To gather information you must:
 
-1. Search for relevant project documentation, standards, and guidelines in the `.ai/`, `.github/`, or documentation directories.
+1. Search for relevant project documentation, standards, and guidelines in the `.ai/`, `.github/`,
+   or documentation directories.
 2. Search the codebase for related classes, methods, or files using #tool:search.
 3. Use #tool:firecrawl/firecrawl-mcp-server/firecrawl_search to gather additional context.
 
@@ -99,9 +97,9 @@ This plan should include:
 
 ## Execution
 
-Once you have enough information and a solid plan, you can begin executing the task.
-During this phase you must use TDD principles. Before making any code changes, you must first write
-the corresponding tests. After writing the tests, run them to ensure they fail. Then proceed to
+Once you have enough information and a solid plan, you can begin executing the task. During this
+phase you must use TDD principles. Before making any code changes, you must first write the
+corresponding tests. After writing the tests, run them to ensure they fail. Then proceed to
 implement the actual code changes. After implementing the changes, run the tests again to ensure
 they pass.
 
@@ -112,34 +110,31 @@ guidelines:
 1. They must use <tdd_instructions> to guide their implementation.
 2. They must provide regular updates on their progress and any challenges they encounter.
 3. They must provide a plan before starting the implementation.
-4. They must ensure all changes are compliant with project standards and guidelines (including UI/UX rules from `.ai/ui-ux-rules.md`).
+4. They must ensure all changes are compliant with project standards and guidelines (including UI/UX
+   rules from `.ai/ui-ux-rules.md`).
 5. They must output a summary of changes made.
-6. They must run `npm run format` (or `pnpm format`) to ensure the code adheres to project formatting standards.
+6. They must run `npm run format` (or `pnpm format`) to ensure the code adheres to project
+   formatting standards.
 7. They must run `npm run lint` (or `pnpm lint`) to ensure no linting errors are present.
 
 Once all sub-agents complete their work, you must validate the overall changes pass the quality gate
-using #tool:sonarsource.sonarlint-vscode/sonarqube_analyzeFile
-</workflow>
+using #tool:sonarsource.sonarlint-vscode/sonarqube_analyzeFile </workflow>
 
-<tdd_instructions>
-When making code changes, you must strictly adhere to TDD principles. This means that for every
-feature or bug fix you implement, you must first write the corresponding tests before writing the
-actual code. You must run the tests to validate your implementation.
+<tdd_instructions> When making code changes, you must strictly adhere to TDD principles. This means
+that for every feature or bug fix you implement, you must first write the corresponding tests before
+writing the actual code. You must run the tests to validate your implementation.
 
 The below steps must be repeated until the task is fully implemented:
 
 1. Write the tests for the feature or bug fix you are about to implement using #tool:edit.
-2. Run the created or changed tests using the appropriate <test_commands> to ensure they
-   fail.
+2. Run the created or changed tests using the appropriate <test_commands> to ensure they fail.
 3. Implement the actual code changes using #tool:edit.
-4. Re-run the created or changed tests using the appropriate <test_commands> to ensure
-   they pass.
+4. Re-run the created or changed tests using the appropriate <test_commands> to ensure they pass.
 5. If they fail, debug and fix the issues, then re-run the tests until they pass.
 
 </tdd_instructions>
 
-<test_commands>
-There are npm/pnpm scripts for each test type:
+<test_commands> There are npm/pnpm scripts for each test type:
 
 - `npm test` or `pnpm test` - Run all unit tests.
 - `npm test -- <test-file-path>` or `pnpm test <test-file-path>` - Run a specific test file.

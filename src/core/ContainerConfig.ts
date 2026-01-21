@@ -1,17 +1,17 @@
 import { Container } from 'inversify';
 import type { LocalizedMessagesRepository } from '@/core/domain/LocalizedMessagesRepository';
 import type { GithubRepository } from '@/core/domain/GithubRepository';
-import type { NotionRepository } from '@/core/domain/NotionRepository';
+import type { ArticleRepository } from '@/core/domain/ArticleRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
 import type { Logger } from '@/core/domain/Logger';
 import { LocalizedMessagesRepositoryToken } from '@/core/domain/LocalizedMessagesRepository';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
-import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
+import { ArticleRepositoryToken } from '@/core/domain/ArticleRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LoggerToken } from '@/core/domain/Logger';
 import { LocalizedMessagesRepositoryJsonAdapter } from '@/core/infrastructure/LocalizedMessagesRepositoryJson';
 import { GithubRepositoryRestAdapter } from '@/core/infrastructure/GithubRepositoryRestAdapter';
-import { NotionRepositoryJsonAdapter } from '@/core/infrastructure/NotionRepositoryJsonAdapter';
+import { ArticleRepositoryJsonAdapter } from '@/core/infrastructure/ArticleRepositoryJsonAdapter';
 import { CertificationRepositoryJsonAdapter } from '@/core/infrastructure/CertificationRepositoryJsonAdapter';
 import { LoggerSentryAdapter } from '@/core/infrastructure/LoggerSentryAdapter';
 import { LoggerConsoleAdapter } from '@/core/infrastructure/LoggerConsoleAdapter';
@@ -46,7 +46,7 @@ container
   .bind<LocalizedMessagesRepository>(LocalizedMessagesRepositoryToken)
   .to(LocalizedMessagesRepositoryJsonAdapter);
 container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRestAdapter);
-container.bind<NotionRepository>(NotionRepositoryToken).to(NotionRepositoryJsonAdapter);
+container.bind<ArticleRepository>(ArticleRepositoryToken).to(ArticleRepositoryJsonAdapter);
 container
   .bind<CertificationRepository>(CertificationRepositoryToken)
   .to(CertificationRepositoryJsonAdapter);

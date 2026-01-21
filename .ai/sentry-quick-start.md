@@ -191,4 +191,5 @@ SENTRY_TRACES_SAMPLE_RATE=0.05  # 5% instead of 10%
 
 ## ✨ That's It!
 
-You're all set! Sentry is now capturing errors with full context, breadcrumbs, and user information while keeping your domain code clean and testable.
+You're all set! Sentry is now capturing errors with full context, breadcrumbs, and user information
+while keeping your domain code clean and testable.

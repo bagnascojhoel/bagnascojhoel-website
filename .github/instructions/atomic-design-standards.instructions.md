@@ -4,7 +4,9 @@ applyTo: *.html, *.css, *.js
 
 # Atomic Design Standards for Mockups
 
-This document outlines the rules for creating style guides and mockups using the Atomic Design methodology. These standards ensure that AI agents and developers can build consistent, scalable, and maintainable UI components.
+This document outlines the rules for creating style guides and mockups using the Atomic Design
+methodology. These standards ensure that AI agents and developers can build consistent, scalable,
+and maintainable UI components.
 
 ## 1. Atomic Design Hierarchy
 
@@ -43,7 +45,8 @@ This document outlines the rules for creating style guides and mockups using the
 
 ### Pages
 
-- **Definition**: Specific instances of templates that show what the UI looks like with real representative content.
+- **Definition**: Specific instances of templates that show what the UI looks like with real
+  representative content.
 - **Rules**:
   - Used to test the effectiveness of the design system.
   - Should include variations (e.g., empty states, error states).
@@ -58,14 +61,19 @@ This document outlines the rules for creating style guides and mockups using the
 ### CSS
 
 - **Design Tokens**: All values must come from a central set of CSS variables.
-- **Methodology**: Use BEM (Block Element Modifier) or a similar naming convention to avoid style leakage.
-- **Responsiveness**: Follow the Mobile-First approach as defined in [ui-ux-rules.md](ui-ux-rules.md).
-- **Libraries**: If using a library (e.g., Tailwind, Bootstrap), ensure it is configured to match the project's design tokens.
+- **Methodology**: Use BEM (Block Element Modifier) or a similar naming convention to avoid style
+  leakage.
+- **Responsiveness**: Follow the Mobile-First approach as defined in
+  [ui-ux-rules.md](ui-ux-rules.md).
+- **Libraries**: If using a library (e.g., Tailwind, Bootstrap), ensure it is configured to match
+  the project's design tokens.
 
 ### JavaScript
 
-- **Minimal Behavior**: Only implement essential interactivity (e.g., mobile menu toggle, modal open/close, tab switching).
-- **Vanilla JS**: Prefer Vanilla JS for PoCs to keep dependencies low, unless a specific framework is requested.
+- **Minimal Behavior**: Only implement essential interactivity (e.g., mobile menu toggle, modal
+  open/close, tab switching).
+- **Vanilla JS**: Prefer Vanilla JS for PoCs to keep dependencies low, unless a specific framework
+  is requested.
 - **State**: Use simple class toggling (`.is-active`, `.is-hidden`) for state changes.
 
 ## 3. Mockup Requirements
