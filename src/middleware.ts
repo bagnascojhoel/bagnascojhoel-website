@@ -53,7 +53,7 @@ export default function middleware(req: NextRequest) {
         },
       },
     });
-    
+
     // Re-throw to let Next.js handle it
     throw error;
   }

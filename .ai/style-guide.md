@@ -14,6 +14,7 @@ These colors create a clean, modern look with orange as the dominant accent colo
 ## Design Tokens
 
 ### Spacing
+
 - `--spacing-xs`: 0.5rem
 - `--spacing-sm`: 1rem
 - `--spacing-md`: 1.5rem
@@ -21,6 +22,7 @@ These colors create a clean, modern look with orange as the dominant accent colo
 - `--spacing-xl`: 3rem
 
 ### Typography
+
 - Font Family: System fonts (-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif)
 - Font Sizes:
   - `--font-size-sm`: 0.875rem
@@ -31,24 +33,29 @@ These colors create a clean, modern look with orange as the dominant accent colo
 - Line Height: 1.6
 
 ### Other
+
 - `--border-radius`: 0.5rem
 - `--box-shadow`: 0 2px 4px rgba(0, 0, 0, 0.1)
 
 ## Component Patterns
 
 ### Buttons
+
 - Class: `.btn`
 - Variants: `.btn--primary` (uses primary orange)
 - States: Hover changes background to lighter orange
 
 ### Navigation
+
 - Class: `.nav`
 - Mobile: Toggle with `.nav__toggle` and `.is-active` on `.nav__list`
 
 ### Cards
+
 - Class: `.project-card`, `.article-item`, `.experience-item`
 - Consistent padding, border-radius, and box-shadow
 
 ### Dark Mode
+
 - Toggle via body class `.dark`
 - Inverts background and text colors

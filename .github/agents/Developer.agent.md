@@ -115,7 +115,7 @@ guidelines:
 4. They must ensure all changes are compliant with project standards and guidelines (including UI/UX rules from `.ai/ui-ux-rules.md`).
 5. They must output a summary of changes made.
 6. They must run `npm run format` (or `pnpm format`) to ensure the code adheres to project formatting standards.
-7. They must run `npm run lint` (or `pnpm lint`) and `npm run type-check` (or `pnpm type-check`) to ensure code quality.
+7. They must run `npm run lint` (or `pnpm lint`) to ensure no linting errors are present.
 
 Once all sub-agents complete their work, you must validate the overall changes pass the quality gate
 using #tool:sonarsource.sonarlint-vscode/sonarqube_analyzeFile

@@ -50,7 +50,9 @@ const Experience = () => {
 
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-mono text-muted-foreground">
-                  {exp.id === 'adp-senior' ? `${t(`items.${exp.id}.period`)}${t('present')}` : t(`items.${exp.id}.period`)}
+                  {exp.id === 'adp-senior'
+                    ? `${t(`items.${exp.id}.period`)}${t('present')}`
+                    : t(`items.${exp.id}.period`)}
                 </p>
                 <h3 className="text-xl font-bold font-mono text-foreground">{t(exp.titleKey)}</h3>
                 <p className="text-primary font-medium">{exp.company}</p>

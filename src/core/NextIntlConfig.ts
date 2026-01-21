@@ -7,6 +7,7 @@ import {
 
 export default getRequestConfig(async params => {
   const locale = (await params.requestLocale)!;
+
   const messages = await container
     .get<LocalizationApplicationService>(LocalizationApplicationServiceToken)
     .getLocalizedMessages(locale);

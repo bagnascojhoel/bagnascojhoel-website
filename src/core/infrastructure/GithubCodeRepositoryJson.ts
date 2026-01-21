@@ -29,7 +29,12 @@ export class GithubCodeRepositoryJson {
 
   toDomain(): GithubCodeRepository {
     const d = (this.data as GithubRepoData) || {};
-    const ownerLogin = d.owner && typeof d.owner === 'object' ? d.owner.login : typeof d.owner === 'string' ? d.owner : undefined;
+    const ownerLogin =
+      d.owner && typeof d.owner === 'object'
+        ? d.owner.login
+        : typeof d.owner === 'string'
+          ? d.owner
+          : undefined;
 
     return GithubCodeRepositoryBuilder.create()
       .withId(d.id ?? 0)

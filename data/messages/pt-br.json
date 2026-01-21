@@ -58,5 +58,10 @@
   "Common": {
     "toggleTheme": "Alternar tema",
     "loading": "Carregando…"
+  },
+  "NotFound": {
+    "title": "404 - Página Não Encontrada",
+    "message": "A página que você está procurando não existe ou foi movida.",
+    "goHome": "Ir para a Página Inicial"
   }
 }

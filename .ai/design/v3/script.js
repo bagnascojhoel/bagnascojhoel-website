@@ -31,12 +31,12 @@ const currentTheme = localStorage.getItem('theme') || 'light';
 body.dataset.theme = currentTheme;
 
 if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        // Toggle between dark and light
-        const newTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
-        body.dataset.theme = newTheme;
-        localStorage.setItem('theme', newTheme);
-    });
+  themeToggle.addEventListener('click', () => {
+    // Toggle between dark and light
+    const newTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+    body.dataset.theme = newTheme;
+    localStorage.setItem('theme', newTheme);
+  });
 }
 
 /* ===== 2. Language Selection ===== */
@@ -49,11 +49,11 @@ if (themeToggle) {
 */
 const languageSelect = document.querySelector('.language-select');
 if (languageSelect) {
-    languageSelect.addEventListener('change', (e) => {
-        console.log('Language changed to:', e.target.value);
-        // TODO: Implement content translation
-        // Ideas: Fetch JSON translations, update DOM, save to localStorage
-    });
+  languageSelect.addEventListener('change', e => {
+    console.log('Language changed to:', e.target.value);
+    // TODO: Implement content translation
+    // Ideas: Fetch JSON translations, update DOM, save to localStorage
+  });
 }
 
 /* ===== 3. Smooth Scrolling ===== */
@@ -64,18 +64,18 @@ if (languageSelect) {
    - Uses native smooth scroll behavior
 */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offset = 80;  // Account for fixed header/nav
-            const targetPosition = target.offsetTop - offset;
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const offset = 80; // Account for fixed header/nav
+      const targetPosition = target.offsetTop - offset;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth',
+      });
+    }
+  });
 });
 
 /* ===== 4. Collapsible Work Item Cards ===== */
@@ -97,28 +97,28 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const workItemCards = document.querySelectorAll('.work-item');
 
 workItemCards.forEach(card => {
-    card.addEventListener('click', function(e) {
-        // If card is expanded and user clicks the link, allow navigation
-        if (e.target.closest('.work-item__link') && this.classList.contains('is-expanded')) {
-            return;  // Let the link work normally
-        }
-        
-        // If clicking link while collapsed, prevent navigation and expand instead
-        if (e.target.closest('.work-item__link')) {
-            e.preventDefault();
-        }
-        
-        // Toggle the expanded state (.is-expanded class)
-        this.classList.toggle('is-expanded');
-    });
-    
-    // Additional handler: Prevent link navigation when card is collapsed
-    const workItemLink = card.querySelector('.work-item__link');
-    if (workItemLink) {
-        workItemLink.addEventListener('click', function(e) {
-            if (!card.classList.contains('is-expanded')) {
-                e.preventDefault();  // Block navigation
-            }
-        });
+  card.addEventListener('click', function (e) {
+    // If card is expanded and user clicks the link, allow navigation
+    if (e.target.closest('.work-item__link') && this.classList.contains('is-expanded')) {
+      return; // Let the link work normally
     }
+
+    // If clicking link while collapsed, prevent navigation and expand instead
+    if (e.target.closest('.work-item__link')) {
+      e.preventDefault();
+    }
+
+    // Toggle the expanded state (.is-expanded class)
+    this.classList.toggle('is-expanded');
+  });
+
+  // Additional handler: Prevent link navigation when card is collapsed
+  const workItemLink = card.querySelector('.work-item__link');
+  if (workItemLink) {
+    workItemLink.addEventListener('click', function (e) {
+      if (!card.classList.contains('is-expanded')) {
+        e.preventDefault(); // Block navigation
+      }
+    });
+  }
 });

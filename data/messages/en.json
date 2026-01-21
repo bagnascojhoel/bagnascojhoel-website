@@ -58,5 +58,10 @@
   "Common": {
     "toggleTheme": "Toggle theme",
     "loading": "Loading…"
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "message": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go to Home"
   }
 }
