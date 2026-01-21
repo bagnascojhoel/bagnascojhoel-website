@@ -17,40 +17,40 @@ export class GithubRepositoryRest implements GithubRepository {
   constructor(@inject(LoggerToken) private logger: Logger) {}
 
   async fetchRepositories(): Promise<GithubCodeRepository[]> {
-    // Mocked response - replace with real GitHub API integration
-    const raw = [
-      {
-        id: 123456,
-        name: 'kwik-ecommerce',
-        fullName: 'bagnascojhoel/kwik-ecommerce',
-        description: 'Ecommerce application built with Java 17, Spring Boot, and Postgres',
-        htmlUrl: 'https://github.com/bagnascojhoel/kwik-ecommerce',
-        topics: ['spring-boot', 'react', 'typescript', 'aws'],
-        createdAt: '2023-01-15T10:00:00Z',
-        updatedAt: '2024-12-01T15:30:00Z',
-        language: 'Java',
-        stargazersCount: 5,
-      },
-      {
-        id: 789012,
-        name: 'portfolio-website-monorepo',
-        fullName: 'bagnascojhoel/portfolio-website-monorepo',
-        description: 'Monorepo including front-end, BFF, and blog',
-        htmlUrl: 'https://github.com/bagnascojhoel/portfolio-website-monorepo',
-        topics: ['java', 'svelte', 'monorepo'],
-        createdAt: '2023-06-20T08:00:00Z',
-        updatedAt: '2024-11-15T12:00:00Z',
-        language: 'TypeScript',
-        stargazersCount: 3,
-      },
-    ];
+    const url = `${this.baseUrl}/users/${this.username}/repos?per_page=100&sort=pushed&direction=desc`;
 
-    // Convert raw JSON to domain objects via infrastructure adapter
-    const { GithubCodeRepositoryJson } = await import(
-      '@/core/infrastructure/GithubCodeRepositoryJson'
-    );
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: this.token ? `Bearer ${this.token}` : '',
+          Accept: 'application/vnd.github.v3+json',
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+      });
 
-    return raw.map(r => new GithubCodeRepositoryJson(r).toDomain());
+      if (!response.ok) {
+        this.logger.error(new Error(`Failed to fetch GitHub repositories`), {
+          status: response.status,
+          statusText: response.statusText,
+          username: this.username,
+        });
+        throw new Error(`GitHub API request failed with status ${response.status}`);
+      }
+
+      const repos = await response.json();
+
+      // Convert raw JSON to domain objects via infrastructure adapter
+      const { GithubCodeRepositoryJson } =
+        await import('@/core/infrastructure/GithubCodeRepositoryJson');
+
+      return repos.map((r: unknown) => new GithubCodeRepositoryJson(r).toDomain());
+    } catch (error) {
+      this.logger.error(
+        error instanceof Error ? error : new Error('Failed to fetch GitHub repositories'),
+        { username: this.username }
+      );
+      throw error;
+    }
   }
 
   async fetchExtraPortfolioDescription(
@@ -108,7 +108,7 @@ export class GithubRepositoryRest implements GithubRepository {
       complexity?: Complexity;
       showEvenArchived?: boolean;
     };
-    
+
     return {
       title: d.title ?? '',
       customDescription: d.description,

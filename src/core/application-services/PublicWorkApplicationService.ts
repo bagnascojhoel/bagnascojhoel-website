@@ -52,22 +52,19 @@ export class PublicWorkApplicationService {
 
     // Log any failures
     if (fetches[GITHUB_CODE_REPOSITORIES_IDX].status === 'rejected') {
-      this.logger.error(
-        new Error('Failed to fetch GitHub repositories'),
-        { reason: fetches[GITHUB_CODE_REPOSITORIES_IDX].reason }
-      );
+      this.logger.error(new Error('Failed to fetch GitHub repositories'), {
+        reason: fetches[GITHUB_CODE_REPOSITORIES_IDX].reason,
+      });
     }
     if (fetches[NOTION_PAGES_IDX].status === 'rejected') {
-      this.logger.error(
-        new Error('Failed to fetch Notion pages'),
-        { reason: fetches[NOTION_PAGES_IDX].reason }
-      );
+      this.logger.error(new Error('Failed to fetch Notion pages'), {
+        reason: fetches[NOTION_PAGES_IDX].reason,
+      });
     }
     if (fetches[CERTIFICATIONS_IDX].status === 'rejected') {
-      this.logger.error(
-        new Error('Failed to fetch certifications'),
-        { reason: fetches[CERTIFICATIONS_IDX].reason }
-      );
+      this.logger.error(new Error('Failed to fetch certifications'), {
+        reason: fetches[CERTIFICATIONS_IDX].reason,
+      });
     }
 
     const result: PublicWorkItem[] = [];
@@ -78,7 +75,7 @@ export class PublicWorkApplicationService {
       ] as PromiseFulfilledResult<GithubCodeRepository[]>;
       const projects = this.projectFactory.createAll(githubRepositories.value);
 
-      result.push(...projects.map(r => ({ ...r, workItemType: 'project' } as PublicWorkItem)));
+      result.push(...projects.map(r => ({ ...r, workItemType: 'project' }) as PublicWorkItem));
     }
 
     if (this.isFullfilled(fetches[NOTION_PAGES_IDX])) {
@@ -87,7 +84,7 @@ export class PublicWorkApplicationService {
       ] as PromiseFulfilledResult<NotionPage[]>;
       const articles = ArticleFactory.fromNotionPages(notionPages.value);
 
-      result.push(...articles.map(p => ({ ...p, workItemType: 'article' } as PublicWorkItem)));
+      result.push(...articles.map(p => ({ ...p, workItemType: 'article' }) as PublicWorkItem));
     }
 
     if (this.isFullfilled(fetches[CERTIFICATIONS_IDX])) {
@@ -97,7 +94,7 @@ export class PublicWorkApplicationService {
 
       result.push(
         ...certifications.value.map(
-          c => ({ ...c, workItemType: 'certification' } as PublicWorkItem)
+          c => ({ ...c, workItemType: 'certification' }) as PublicWorkItem
         )
       );
     }

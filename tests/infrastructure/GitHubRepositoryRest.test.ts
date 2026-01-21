@@ -1,14 +1,72 @@
 /// <reference types="vitest" />
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest';
+import { http, HttpResponse } from 'msw';
+import { setupServer } from 'msw/node';
 import { GithubRepositoryRest } from '../../src/core/infrastructure/GithubRepositoryRest';
+import { MockLogger } from '../fixtures/mockLogger';
+
+// Mock GitHub API response
+const mockGitHubApiResponse = [
+  {
+    id: 123456,
+    name: 'kwik-ecommerce',
+    full_name: 'bagnascojhoel/kwik-ecommerce',
+    owner: { login: 'bagnascojhoel' },
+    description: 'Ecommerce application built with Java 17, Spring Boot, and Postgres',
+    html_url: 'https://github.com/bagnascojhoel/kwik-ecommerce',
+    homepage: null,
+    topics: ['spring-boot', 'react', 'typescript', 'aws'],
+    created_at: '2023-01-15T10:00:00Z',
+    updated_at: '2024-12-01T15:30:00Z',
+    pushed_at: '2024-12-01T15:30:00Z',
+    language: 'Java',
+    stargazers_count: 5,
+    archived: false,
+  },
+  {
+    id: 789012,
+    name: 'portfolio-website-monorepo',
+    full_name: 'bagnascojhoel/portfolio-website-monorepo',
+    owner: { login: 'bagnascojhoel' },
+    description: 'Monorepo including front-end, BFF, and blog',
+    html_url: 'https://github.com/bagnascojhoel/portfolio-website-monorepo',
+    homepage: 'https://example.com',
+    topics: ['java', 'svelte', 'monorepo'],
+    created_at: '2023-06-20T08:00:00Z',
+    updated_at: '2024-11-15T12:00:00Z',
+    pushed_at: '2024-11-15T12:00:00Z',
+    language: 'TypeScript',
+    stargazers_count: 3,
+    archived: false,
+  },
+];
+
+// Set up MSW server
+const server = setupServer(
+  http.get('https://api.github.com/users/bagnascojhoel/repos', () => {
+    return HttpResponse.json(mockGitHubApiResponse);
+  })
+);
 
 describe('GitHubRepositoryRest', () => {
   let repository: GithubRepositoryRest;
 
+  beforeAll(() => {
+    server.listen({ onUnhandledRequest: 'warn' });
+  });
+
   beforeEach(() => {
-    repository = new GithubRepositoryRest();
+    repository = new GithubRepositoryRest(new MockLogger());
+  });
+
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
+  afterAll(() => {
+    server.close();
   });
 
   describe('fetchRepositories', () => {
