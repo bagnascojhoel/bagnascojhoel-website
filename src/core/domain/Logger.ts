@@ -1,6 +1,6 @@
 /**
  * Logger interface - Domain port for error tracking and logging.
- * 
+ *
  * This abstraction ensures domain and application layers remain framework-agnostic.
  * Implementations (adapters) should be provided in the infrastructure layer.
  */

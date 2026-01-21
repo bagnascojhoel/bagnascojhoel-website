@@ -73,7 +73,9 @@ export class PublicWorkApplicationService {
       const githubRepositories: PromiseFulfilledResult<GithubCodeRepository[]> = fetches[
         GITHUB_CODE_REPOSITORIES_IDX
       ] as PromiseFulfilledResult<GithubCodeRepository[]>;
-      const projects = this.projectFactory.createAll(githubRepositories.value);
+      const projects = this.projectFactory
+        .createAll(githubRepositories.value)
+        .filter(p => !p.hasEmptyDescription());
 
       result.push(...projects.map(r => ({ ...r, workItemType: 'project' }) as PublicWorkItem));
     }
@@ -99,6 +101,9 @@ export class PublicWorkApplicationService {
       );
     }
 
+    // Shuffle the result array to interleave items of different types
+    this.shuffleWorkItems(result);
+
     // cache result
     this.cache = { timestamp: now, items: result };
     this.logger.addBreadcrumb('PublicWork cache updated', {
@@ -106,6 +111,16 @@ export class PublicWorkApplicationService {
     });
 
     return result;
+  }
+
+  /**
+   * Shuffles an array in place using the Fisher-Yates algorithm
+   */
+  private shuffleWorkItems<T>(array: T[]): void {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
   }
 
   private isFullfilled<T>(result: PromiseSettledResult<T>): boolean {

@@ -21,11 +21,7 @@ export default function Error({
       <p className="text-gray-600 dark:text-gray-400">
         We apologize for the inconvenience. Our team has been notified.
       </p>
-      {error.digest && (
-        <p className="text-sm text-gray-500">
-          Error ID: {error.digest}
-        </p>
-      )}
+      {error.digest && <p className="text-sm text-gray-500">Error ID: {error.digest}</p>}
       <button
         onClick={() => reset()}
         className="rounded-lg bg-primary px-6 py-3 text-white transition-colors hover:bg-primary/90"

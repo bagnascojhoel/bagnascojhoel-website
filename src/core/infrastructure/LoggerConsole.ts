@@ -4,12 +4,16 @@ import { Logger } from '@/core/domain/Logger';
 /**
  * Console implementation of the Logger interface.
  * This adapter logs to the console and is intended for development and testing.
- * 
+ *
  * Should be used in non-production environments or tests.
  */
 @injectable()
 export class LoggerConsole implements Logger {
-  private breadcrumbs: Array<{ message: string; data?: Record<string, unknown>; timestamp: number }> = [];
+  private breadcrumbs: Array<{
+    message: string;
+    data?: Record<string, unknown>;
+    timestamp: number;
+  }> = [];
   private tags: Record<string, string> = {};
   private user: { id: string; email?: string; username?: string } | null = null;
 

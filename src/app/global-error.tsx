@@ -18,18 +18,18 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <div style={{ 
-          display: 'flex', 
-          flexDirection: 'column', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          minHeight: '100vh',
-          padding: '2rem',
-          textAlign: 'center',
-        }}>
-          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-            Something went wrong!
-          </h1>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            padding: '2rem',
+            textAlign: 'center',
+          }}
+        >
+          <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Something went wrong!</h1>
           <p style={{ marginBottom: '2rem', color: '#666' }}>
             We apologize for the inconvenience. Our team has been notified.
           </p>

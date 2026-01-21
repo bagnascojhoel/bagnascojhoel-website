@@ -74,7 +74,7 @@ describe('LocalizationApplicationService', () => {
 
     it('should throw error when repository throws for unsupported locale', async () => {
       await expect(service.getLocalizedMessages('fr')).rejects.toThrow('Unsupported locale: fr');
-      
+
       // Verify error was logged
       expect(mockLogger.hasError('Unsupported locale')).toBe(true);
       expect(mockLogger.errors[0].context).toEqual({ locale: 'fr' });

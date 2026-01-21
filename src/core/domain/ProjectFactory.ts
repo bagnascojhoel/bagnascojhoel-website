@@ -6,7 +6,7 @@ export class ProjectFactory {
     return new ProjectBuilder()
       .withId(`gh-${repo.id}`)
       .withTitle(repo.name)
-      .withDescription(repo.description || 'No description provided')
+      .withDescription(repo.description || '')
       .withTags(
         repo.topics && repo.topics.length ? repo.topics : repo.language ? [repo.language] : []
       )

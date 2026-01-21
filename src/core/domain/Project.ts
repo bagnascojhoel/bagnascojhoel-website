@@ -11,6 +11,10 @@ export class Project {
     public readonly complexity?: string,
     public readonly startsOpen?: boolean
   ) {}
+
+  hasEmptyDescription(): boolean {
+    return !this.description || this.description.trim() === '';
+  }
 }
 
 export class ProjectBuilder {
@@ -78,7 +82,7 @@ export class ProjectBuilder {
   build(): Project {
     if (!this._id) throw new Error('Project id is required');
     if (!this._title) throw new Error('Project title is required');
-    if (!this._description) throw new Error('Project description is required');
+    if (this._description === undefined) throw new Error('Project description is required');
     if (!this._tags) throw new Error('Project tags are required');
     if (!this._link) throw new Error('Project link is required');
 

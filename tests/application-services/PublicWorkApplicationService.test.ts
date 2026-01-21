@@ -103,9 +103,185 @@ describe('PublicWorkApplicationService', () => {
     const uc = container.get(PublicWorkApplicationService);
     const items = await uc.getAll();
     expect(items.length).toBe(2); // projects + articles
-    
+
     // Verify error was logged
     expect(mockLogger.hasError('Failed to fetch certifications')).toBe(true);
+  });
+
+  it('should filter out projects with empty descriptions', async () => {
+    const githubRepoWithEmptyDesc: GithubRepository = {
+      fetchRepositories: async () => [
+        {
+          id: 1,
+          name: 'repo-with-desc',
+          fullName: 'user/repo-with-desc',
+          description: 'Valid description',
+          htmlUrl: 'https://github.com/user/repo-with-desc',
+          topics: ['a'],
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-02T00:00:00Z',
+          language: 'TypeScript',
+          stargazersCount: 0,
+        },
+        {
+          id: 2,
+          name: 'repo-empty-desc',
+          fullName: 'user/repo-empty-desc',
+          description: '',
+          htmlUrl: 'https://github.com/user/repo-empty-desc',
+          topics: ['b'],
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-02T00:00:00Z',
+          language: 'JavaScript',
+          stargazersCount: 0,
+        },
+        {
+          id: 3,
+          name: 'repo-whitespace-desc',
+          fullName: 'user/repo-whitespace-desc',
+          description: '   ',
+          htmlUrl: 'https://github.com/user/repo-whitespace-desc',
+          topics: ['c'],
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-02T00:00:00Z',
+          language: 'Python',
+          stargazersCount: 0,
+        },
+      ],
+    };
+
+    const container = new Container();
+    container
+      .bind<GithubRepository>(GithubRepositoryToken)
+      .toConstantValue(githubRepoWithEmptyDesc);
+    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
+    container
+      .bind<CertificationRepository>(CertificationRepositoryToken)
+      .toConstantValue(mockCertRepo);
+    container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+    container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+    container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
+
+    const uc = container.get(PublicWorkApplicationService);
+    const items = await uc.getAll();
+
+    const projects = items.filter(i => (i as any).workItemType === 'project');
+
+    // Should only include the project with valid description
+    expect(projects.length).toBe(1);
+    expect((projects[0] as any).title).toBe('repo-with-desc');
+    expect((projects[0] as any).description).toBe('Valid description');
+  });
+
+  it('should shuffle work items by type instead of appending lists', async () => {
+    // Create repos with multiple items per type
+    const multiItemGitHubRepo: GithubRepository = {
+      fetchRepositories: async () => [
+        {
+          id: 1,
+          name: 'project-1',
+          fullName: 'user/project-1',
+          description: 'Project 1',
+          htmlUrl: 'https://github.com/user/project-1',
+          topics: ['a'],
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-02T00:00:00Z',
+          language: 'TypeScript',
+          stargazersCount: 0,
+        },
+        {
+          id: 2,
+          name: 'project-2',
+          fullName: 'user/project-2',
+          description: 'Project 2',
+          htmlUrl: 'https://github.com/user/project-2',
+          topics: ['b'],
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-02T00:00:00Z',
+          language: 'JavaScript',
+          stargazersCount: 0,
+        },
+      ],
+    };
+
+    const multiItemNotionRepo: NotionRepository = {
+      fetchPages: async () => [
+        {
+          id: 'a1',
+          title: 'Article 1',
+          description: 'desc1',
+          url: 'https://notion.so/a1',
+          tags: ['x'],
+          publishedAt: '2024-10-10T00:00:00Z',
+          status: 'published',
+        },
+        {
+          id: 'a2',
+          title: 'Article 2',
+          description: 'desc2',
+          url: 'https://notion.so/a2',
+          tags: ['y'],
+          publishedAt: '2024-10-11T00:00:00Z',
+          status: 'published',
+        },
+      ],
+    };
+
+    const multiItemCertRepo: CertificationRepository = {
+      fetchCertifications: async () => [
+        {
+          id: 'c1',
+          type: 'Certification',
+          title: 'Cert 1',
+          description: 'desc1',
+          tags: ['cert'],
+          link: 'https://example.com/c1',
+        },
+        {
+          id: 'c2',
+          type: 'Certification',
+          title: 'Cert 2',
+          description: 'desc2',
+          tags: ['cert'],
+          link: 'https://example.com/c2',
+        },
+      ],
+    };
+
+    const container = new Container();
+    container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(multiItemGitHubRepo);
+    container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(multiItemNotionRepo);
+    container
+      .bind<CertificationRepository>(CertificationRepositoryToken)
+      .toConstantValue(multiItemCertRepo);
+    container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+    container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+    container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
+
+    const uc = container.get(PublicWorkApplicationService);
+    const items = await uc.getAll();
+
+    // Should have 6 items total
+    expect(items.length).toBe(6);
+
+    // Extract types in order
+    const types = items.map(i => (i as any).workItemType);
+
+    // Should NOT be all projects, then all articles, then all certifications
+    const isAppended =
+      types[0] === 'project' &&
+      types[1] === 'project' &&
+      types[2] === 'article' &&
+      types[3] === 'article' &&
+      types[4] === 'certification' &&
+      types[5] === 'certification';
+
+    expect(isAppended).toBe(false);
+
+    // Verify all types are present
+    expect(types.filter(t => t === 'project').length).toBe(2);
+    expect(types.filter(t => t === 'article').length).toBe(2);
+    expect(types.filter(t => t === 'certification').length).toBe(2);
   });
 
   describe('caching and extras orchestration (planned features)', () => {
