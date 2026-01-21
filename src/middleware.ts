@@ -2,34 +2,61 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './app/_lib/routing';
 import { NextRequest, NextResponse } from 'next/server';
 import { isValidLocale, Locale, DEFAULT_LOCALE } from '@/core/domain/Locale';
+import * as Sentry from '@sentry/nextjs';
 
 const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
+  try {
+    const { pathname } = req.nextUrl;
 
-  const segments = pathname.split('/').filter(Boolean);
-  const firstSegment = segments[0];
+    const segments = pathname.split('/').filter(Boolean);
+    const firstSegment = segments[0];
 
-  // Treat first segment as a locale-like identifier if it matches a language tag
-  // pattern like 'en', 'pt-br', 'pt-bra', 'ens', etc. This accepts primary
-  // subtags of 2-3 letters and an optional secondary subtag (2-3 letters).
-  const localeLikePattern = /^[A-Za-z]{2,3}(?:-[A-Za-z]{2,3})?$/;
-  const isLocaleLike = Boolean(firstSegment && localeLikePattern.test(firstSegment));
+    // Treat first segment as a locale-like identifier if it matches a language tag
+    // pattern like 'en', 'pt-br', 'pt-bra', 'ens', etc. This accepts primary
+    // subtags of 2-3 letters and an optional secondary subtag (2-3 letters).
+    const localeLikePattern = /^[A-Za-z]{2,3}(?:-[A-Za-z]{2,3})?$/;
+    const isLocaleLike = Boolean(firstSegment && localeLikePattern.test(firstSegment));
 
-  // If it's locale-like but not supported, redirect to root to avoid nesting
-  // (e.g., /es, /pt-bra, /ens)
-  if (isLocaleLike && !isValidLocale(firstSegment || '')) {
-    return NextResponse.redirect(new URL('/', req.url));
+    // If it's locale-like but not supported, redirect to root to avoid nesting
+    // (e.g., /es, /pt-bra, /ens)
+    if (isLocaleLike && !isValidLocale(firstSegment || '')) {
+      Sentry.addBreadcrumb({
+        message: 'Invalid locale detected, redirecting to root',
+        data: { invalidLocale: firstSegment, pathname },
+        level: 'info',
+      });
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+
+    // If user is at root path without a locale, always detect and redirect to appropriate locale
+    if (pathname === '/') {
+      const detectedLocale = detectInitialLocale(req);
+      Sentry.addBreadcrumb({
+        message: 'Root path accessed, redirecting to detected locale',
+        data: { detectedLocale, pathname },
+        level: 'info',
+      });
+      return NextResponse.redirect(new URL(`/${detectedLocale}`, req.url));
+    }
+
+    return intlMiddleware(req);
+  } catch (error) {
+    // Capture middleware errors in Sentry
+    Sentry.captureException(error, {
+      contexts: {
+        middleware: {
+          pathname: req.nextUrl.pathname,
+          method: req.method,
+          url: req.url,
+        },
+      },
+    });
+    
+    // Re-throw to let Next.js handle it
+    throw error;
   }
-
-  // If user is at root path without a locale, always detect and redirect to appropriate locale
-  if (pathname === '/') {
-    const detectedLocale = detectInitialLocale(req);
-    return NextResponse.redirect(new URL(`/${detectedLocale}`, req.url));
-  }
-
-  return intlMiddleware(req);
 }
 
 /**

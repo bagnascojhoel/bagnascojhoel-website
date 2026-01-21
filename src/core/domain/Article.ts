@@ -1,5 +1,3 @@
-import { WorkItemType } from '@/core/domain/WorkItemType';
-
 export interface Article {
   id: string;
   title: string;

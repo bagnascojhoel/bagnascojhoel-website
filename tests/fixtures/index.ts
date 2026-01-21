@@ -7,3 +7,4 @@ export * from './mockExtraDescriptions';
 export * from './mockPortfolioDescriptionFiles';
 export * from './mockMessages';
 export * from './mockNotionPages';
+export * from './mockLogger';

@@ -26,8 +26,9 @@ describe('ArticleFactory', () => {
   it('should transform a Notion page into an Article', () => {
     const article = ArticleFactory.fromNotionPage(publishedPage as any);
     expect(article.id.startsWith('notion-')).toBe(true);
-    expect(article.type).toBe('Article');
     expect(article.title).toBe('Published');
+    expect(article.description).toBe('desc');
+    expect(article.tags).toEqual(['tech']);
   });
 
   it('should filter out draft pages', () => {

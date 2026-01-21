@@ -1,8 +1,10 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { GithubRepository } from '@/core/domain/GithubRepository';
 import { GithubCodeRepository } from '@/core/domain/GithubCodeRepository';
 import { ExtraPortfolioDescription } from '@/core/domain/ExtraPortfolioDescription';
 import { Complexity } from '@/core/domain/Complexity';
+import type { Logger } from '@/core/domain/Logger';
+import { LoggerToken } from '@/core/domain/Logger';
 
 const EXTRA_PORTFOLIO_DESCRIPTION_PATH = 'portfolio-description.json';
 
@@ -11,6 +13,8 @@ export class GithubRepositoryRest implements GithubRepository {
   private readonly username = 'bagnascojhoel';
   private readonly baseUrl = 'https://api.github.com';
   private token = process.env.GITHUB_TOKEN;
+
+  constructor(@inject(LoggerToken) private logger: Logger) {}
 
   async fetchRepositories(): Promise<GithubCodeRepository[]> {
     // Mocked response - replace with real GitHub API integration
@@ -65,15 +69,18 @@ export class GithubRepositoryRest implements GithubRepository {
 
     if (res.status === 404) return null;
     if (res.status === 403) {
-      // eslint-disable-next-line no-console
-      console.warn(`GitHub rate limit or forbidden when fetching ${owner}/${repo}: ${res.status}`);
+      this.logger.warn(`GitHub rate limit or forbidden when fetching ${owner}/${repo}`, {
+        status: res.status,
+        owner,
+        repo,
+      });
       return null;
     }
 
     if (!res.ok) {
-      // eslint-disable-next-line no-console
-      console.error(
-        `Error fetching extra-portfolio-description file ${owner}/${repo}: ${res.status}`
+      this.logger.error(
+        new Error(`Failed to fetch extra portfolio description from ${owner}/${repo}`),
+        { status: res.status, owner, repo }
       );
       return null;
     }
@@ -83,8 +90,10 @@ export class GithubRepositoryRest implements GithubRepository {
       const jsonResponse = JSON.parse(text);
       return this.createExtraPortfolioDescription(jsonResponse);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Failed to read response as text', error);
+      this.logger.error(
+        error instanceof Error ? error : new Error('Failed to parse extra portfolio description'),
+        { owner, repo }
+      );
       return null;
     }
   }

@@ -5,7 +5,6 @@ export class ArticleFactory {
   static fromNotionPage(page: NotionPage): Article {
     return {
       id: `notion-${page.id}`,
-      type: 'Article',
       title: page.title,
       description: page.description,
       tags: page.tags,

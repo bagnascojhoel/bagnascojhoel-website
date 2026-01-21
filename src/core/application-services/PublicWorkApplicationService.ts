@@ -3,9 +3,11 @@ import { Certification } from '@/core/domain/Certification';
 import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { NotionRepository } from '@/core/domain/NotionRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
+import type { Logger } from '@/core/domain/Logger';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
+import { LoggerToken } from '@/core/domain/Logger';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import { ArticleFactory } from '@/core/domain/ArticleFactory';
 import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
@@ -26,16 +28,20 @@ export class PublicWorkApplicationService {
     @inject(NotionRepositoryToken) private notionRepository: NotionRepository,
     @inject(CertificationRepositoryToken) private certificationRepository: CertificationRepository,
     @inject(ProjectFactoryToken)
-    private projectFactory: ProjectFactory
+    private projectFactory: ProjectFactory,
+    @inject(LoggerToken) private logger: Logger
   ) {}
 
   async getAll(): Promise<PublicWorkItem[]> {
     const now = Date.now();
     if (this.cache && now - this.cache.timestamp < this.cacheTtlMs) {
-      // eslint-disable-next-line no-console
-      console.debug('PublicWork cache hit');
+      this.logger.addBreadcrumb('PublicWork cache hit');
       return this.cache.items;
     }
+
+    this.logger.addBreadcrumb('Fetching public work items', {
+      cacheTtlMs: this.cacheTtlMs,
+    });
 
     // Fetch repositories, pages, certifications and extras in parallel
     const fetches: PromiseSettledResult<unknown>[] = await Promise.allSettled([
@@ -43,6 +49,26 @@ export class PublicWorkApplicationService {
       this.notionRepository.fetchPages(),
       this.certificationRepository.fetchCertifications(),
     ]);
+
+    // Log any failures
+    if (fetches[GITHUB_CODE_REPOSITORIES_IDX].status === 'rejected') {
+      this.logger.error(
+        new Error('Failed to fetch GitHub repositories'),
+        { reason: fetches[GITHUB_CODE_REPOSITORIES_IDX].reason }
+      );
+    }
+    if (fetches[NOTION_PAGES_IDX].status === 'rejected') {
+      this.logger.error(
+        new Error('Failed to fetch Notion pages'),
+        { reason: fetches[NOTION_PAGES_IDX].reason }
+      );
+    }
+    if (fetches[CERTIFICATIONS_IDX].status === 'rejected') {
+      this.logger.error(
+        new Error('Failed to fetch certifications'),
+        { reason: fetches[CERTIFICATIONS_IDX].reason }
+      );
+    }
 
     const result: PublicWorkItem[] = [];
 
@@ -78,8 +104,9 @@ export class PublicWorkApplicationService {
 
     // cache result
     this.cache = { timestamp: now, items: result };
-    // eslint-disable-next-line no-console
-    console.debug('PublicWork cache updated');
+    this.logger.addBreadcrumb('PublicWork cache updated', {
+      itemCount: result.length,
+    });
 
     return result;
   }

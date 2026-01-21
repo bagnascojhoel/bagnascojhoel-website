@@ -5,12 +5,15 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { Container } from 'inversify';
 import { LocalizationApplicationService } from '../../src/core/application-services/LocalizationApplicationService';
 import type { LocalizedMessagesRepository } from '../../src/core/domain/LocalizedMessagesRepository';
+import type { Logger } from '../../src/core/domain/Logger';
 import { LocalizedMessagesRepositoryToken } from '../../src/core/domain/LocalizedMessagesRepository';
-import { mockMessagesEn, mockMessagesPtBr } from '../fixtures';
+import { LoggerToken } from '../../src/core/domain/Logger';
+import { mockMessagesEn, mockMessagesPtBr, MockLogger } from '../fixtures';
 
 describe('LocalizationApplicationService', () => {
   let service: LocalizationApplicationService;
   let mockRepository: LocalizedMessagesRepository;
+  let mockLogger: MockLogger;
   let container: Container;
 
   beforeEach(() => {
@@ -23,11 +26,14 @@ describe('LocalizationApplicationService', () => {
       },
     };
 
+    mockLogger = new MockLogger();
+
     // Set up InversifyJS container
     container = new Container();
     container
       .bind<LocalizedMessagesRepository>(LocalizedMessagesRepositoryToken)
       .toConstantValue(mockRepository);
+    container.bind<Logger>(LoggerToken).toConstantValue(mockLogger);
     container.bind<LocalizationApplicationService>(LocalizationApplicationService).toSelf();
 
     // Resolve service
@@ -68,6 +74,10 @@ describe('LocalizationApplicationService', () => {
 
     it('should throw error when repository throws for unsupported locale', async () => {
       await expect(service.getLocalizedMessages('fr')).rejects.toThrow('Unsupported locale: fr');
+      
+      // Verify error was logged
+      expect(mockLogger.hasError('Unsupported locale')).toBe(true);
+      expect(mockLogger.errors[0].context).toEqual({ locale: 'fr' });
     });
   });
 });

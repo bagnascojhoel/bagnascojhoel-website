@@ -6,10 +6,13 @@ import { PublicWorkApplicationService } from '@/core/application-services/Public
 import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { NotionRepository } from '@/core/domain/NotionRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
+import type { Logger } from '@/core/domain/Logger';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { NotionRepositoryToken } from '@/core/domain/NotionRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
+import { LoggerToken } from '@/core/domain/Logger';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
+import { MockLogger } from '../fixtures/mockLogger';
 
 const mockGitHubRepo: GithubRepository = {
   fetchRepositories: async () => [
@@ -64,6 +67,7 @@ describe('PublicWorkApplicationService', () => {
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(mockCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+    container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
@@ -85,6 +89,7 @@ describe('PublicWorkApplicationService', () => {
       },
     };
 
+    const mockLogger = new MockLogger();
     const container = new Container();
     container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(mockGitHubRepo);
     container.bind<NotionRepository>(NotionRepositoryToken).toConstantValue(mockNotionRepo);
@@ -92,11 +97,15 @@ describe('PublicWorkApplicationService', () => {
       .bind<CertificationRepository>(CertificationRepositoryToken)
       .toConstantValue(failingCertRepo);
     container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+    container.bind<Logger>(LoggerToken).toConstantValue(mockLogger);
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
     const items = await uc.getAll();
     expect(items.length).toBe(2); // projects + articles
+    
+    // Verify error was logged
+    expect(mockLogger.hasError('Failed to fetch certifications')).toBe(true);
   });
 
   describe('caching and extras orchestration (planned features)', () => {
@@ -127,6 +136,7 @@ describe('PublicWorkApplicationService', () => {
         .bind<CertificationRepository>(CertificationRepositoryToken)
         .toConstantValue(mockCertRepo);
       container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+      container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
       container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
       const uc = container.get(PublicWorkApplicationService);
@@ -171,6 +181,7 @@ describe('PublicWorkApplicationService', () => {
         .bind<CertificationRepository>(CertificationRepositoryToken)
         .toConstantValue(mockCertRepo);
       container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+      container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
       container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
       const uc = container.get(PublicWorkApplicationService);

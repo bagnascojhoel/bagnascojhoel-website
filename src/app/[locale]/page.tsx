@@ -7,23 +7,18 @@ import FloatingControls from '@/app/_components/FloatingControls';
 import GeometricBackground from '@/app/_components/GeometricBackground';
 
 import PublicWorkErrorBoundary from '@/app/_components/PublicWorkErrorBoundary';
-import { PublicWorkApplicationService } from '@/core/application-services/PublicWorkApplicationService';
+import {
+  PublicWorkApplicationService,
+  PublicWorkApplicationServiceToken,
+} from '@/core/application-services/PublicWorkApplicationService';
 import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
-import { GithubRepositoryRest } from '@/core/infrastructure/GithubRepositoryRest';
-import { NotionRepositoryRest } from '@/core/infrastructure/NotionRepositoryRest';
-import { CertificationRepositoryJson } from '@/core/infrastructure/CertificationRepositoryJson';
-import { ProjectFactory } from '@/core/domain/ProjectFactory';
+import { container } from '@/core/ContainerConfig';
 
 export default async function Home() {
   let workItems: PublicWorkItem[] = [];
   let workError = false;
   try {
-    const useCase = new PublicWorkApplicationService(
-      new GithubRepositoryRest(),
-      new NotionRepositoryRest(),
-      new CertificationRepositoryJson(),
-      new ProjectFactory()
-    );
+    const useCase = container.get<PublicWorkApplicationService>(PublicWorkApplicationServiceToken);
     workItems = await useCase.getAll();
   } catch (err) {
     console.error('Failed to load public work items:', err);
