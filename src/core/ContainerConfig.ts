@@ -17,9 +17,9 @@ import { LoggerSentryAdapter } from '@/core/infrastructure/LoggerSentryAdapter';
 import { LoggerConsoleAdapter } from '@/core/infrastructure/LoggerConsoleAdapter';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import {
-  LocalizationApplicationService,
-  LocalizationApplicationServiceToken,
-} from '@/core/application-services/LocalizationApplicationService';
+  MessagesApplicationService,
+  MessagesApplicationServiceToken,
+} from '@/core/application-services/MessagesApplicationService';
 import {
   PublicWorkApplicationService,
   PublicWorkApplicationServiceToken,
@@ -60,8 +60,8 @@ container
 // application-service bindings
 
 container
-  .bind<LocalizationApplicationService>(LocalizationApplicationServiceToken)
-  .to(LocalizationApplicationService);
+  .bind<MessagesApplicationService>(MessagesApplicationServiceToken)
+  .to(MessagesApplicationService);
 container
   .bind<PublicWorkApplicationService>(PublicWorkApplicationServiceToken)
   .to(PublicWorkApplicationService);

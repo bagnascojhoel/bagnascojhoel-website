@@ -3,15 +3,15 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { Container } from 'inversify';
-import { LocalizationApplicationService } from '../../src/core/application-services/LocalizationApplicationService';
+import { MessagesApplicationService } from '../../src/core/application-services/MessagesApplicationService';
 import type { LocalizedMessagesRepository } from '../../src/core/domain/LocalizedMessagesRepository';
 import type { Logger } from '../../src/core/domain/Logger';
 import { LocalizedMessagesRepositoryToken } from '../../src/core/domain/LocalizedMessagesRepository';
 import { LoggerToken } from '../../src/core/domain/Logger';
 import { mockMessagesEn, mockMessagesPtBr, MockLogger } from '../fixtures';
 
-describe('LocalizationApplicationService', () => {
-  let service: LocalizationApplicationService;
+describe('MessagesApplicationService', () => {
+  let service: MessagesApplicationService;
   let mockRepository: LocalizedMessagesRepository;
   let mockLogger: MockLogger;
   let container: Container;
@@ -34,10 +34,10 @@ describe('LocalizationApplicationService', () => {
       .bind<LocalizedMessagesRepository>(LocalizedMessagesRepositoryToken)
       .toConstantValue(mockRepository);
     container.bind<Logger>(LoggerToken).toConstantValue(mockLogger);
-    container.bind<LocalizationApplicationService>(LocalizationApplicationService).toSelf();
+    container.bind<MessagesApplicationService>(MessagesApplicationService).toSelf();
 
     // Resolve service
-    service = container.get<LocalizationApplicationService>(LocalizationApplicationService);
+    service = container.get<MessagesApplicationService>(MessagesApplicationService);
   });
 
   describe('getLocalizedMessages', () => {

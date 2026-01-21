@@ -23,14 +23,15 @@ export async function register() {
 
       debug: process.env.NODE_ENV === 'development',
 
-      // Don't send errors in test environment
-      enabled: process.env.NODE_ENV !== 'test',
+      // Only enable in production
+      enabled: process.env.NODE_ENV === 'production',
 
       beforeSend(event, hint) {
-        // Filter out errors in development
+        // Don't send events in development
         if (process.env.NODE_ENV === 'development') {
-          console.log('Sentry Server Event:', event);
-          console.log('Sentry Server Hint:', hint);
+          console.log('Sentry Server Event (not sent):', event);
+          console.log('Sentry Server Hint (not sent):', hint);
+          return null;
         }
         return event;
       },
@@ -55,14 +56,15 @@ export async function register() {
 
       debug: process.env.NODE_ENV === 'development',
 
-      // Don't send errors in test environment
-      enabled: process.env.NODE_ENV !== 'test',
+      // Only enable in production
+      enabled: process.env.NODE_ENV === 'production',
 
       beforeSend(event, hint) {
-        // Filter out errors in development
+        // Don't send events in development
         if (process.env.NODE_ENV === 'development') {
-          console.log('Sentry Edge Event:', event);
-          console.log('Sentry Edge Hint:', hint);
+          console.log('Sentry Edge Event (not sent):', event);
+          console.log('Sentry Edge Hint (not sent):', hint);
+          return null;
         }
         return event;
       },

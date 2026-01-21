@@ -5,7 +5,7 @@ import { LocalizedMessagesRepositoryToken } from '@/core/domain/LocalizedMessage
 import { LoggerToken } from '@/core/domain/Logger';
 
 @injectable()
-export class LocalizationApplicationService {
+export class MessagesApplicationService {
   constructor(
     @inject(LocalizedMessagesRepositoryToken)
     private messagesRepository: LocalizedMessagesRepository,
@@ -27,4 +27,4 @@ export class LocalizationApplicationService {
   }
 }
 
-export const LocalizationApplicationServiceToken = 'LocalizationApplicationService';
+export const MessagesApplicationServiceToken = 'MessagesApplicationService';

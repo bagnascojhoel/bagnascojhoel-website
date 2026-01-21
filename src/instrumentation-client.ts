@@ -31,6 +31,9 @@ Sentry.init({
   // Adjust this value in production
   debug: process.env.NODE_ENV === 'development',
 
+  // Only enable in production
+  enabled: process.env.NODE_ENV === 'production',
+
   // Filter out browser extension errors and other noise
   ignoreErrors: [
     // Browser extensions
@@ -49,12 +52,11 @@ Sentry.init({
   ],
 
   beforeSend(event, hint) {
-    // Filter out errors in development
+    // Don't send events in development
     if (process.env.NODE_ENV === 'development') {
-      console.log('Sentry Event:', event);
-      console.log('Sentry Hint:', hint);
-      // You can return null to not send events in development
-      // return null;
+      console.log('Sentry Event (not sent):', event);
+      console.log('Sentry Hint (not sent):', hint);
+      return null;
     }
     return event;
   },

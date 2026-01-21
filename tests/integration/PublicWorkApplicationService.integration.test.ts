@@ -115,7 +115,7 @@ describe('PublicWorkApplicationService Integration Tests', () => {
       const service = container.get(PublicWorkApplicationService);
 
       // Act: Call the service method
-      const result = await service.getAll();
+      const result = await service.getAll('en');
 
       // Assert: Verify the aggregated result contains all work item types
       expect(result).toBeDefined();

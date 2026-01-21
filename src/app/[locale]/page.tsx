@@ -13,13 +13,14 @@ import {
 } from '@/core/application-services/PublicWorkApplicationService';
 import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
 import { container } from '@/core/ContainerConfig';
+import { Locale } from '@/core/domain/Locale';
 
-export default async function Home() {
+export default async function Home({ params: { locale } }: { params: { locale: Locale } }) {
   let workItems: PublicWorkItem[] = [];
   let workError = false;
   try {
     const useCase = container.get<PublicWorkApplicationService>(PublicWorkApplicationServiceToken);
-    workItems = await useCase.getAll();
+    workItems = await useCase.getAll(locale);
   } catch (err) {
     console.error('Failed to load public work items:', err);
     workError = true;

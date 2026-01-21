@@ -24,6 +24,7 @@ const mockGitHubRepo: GithubRepository = {
       id: 1,
       name: 'repo-1',
       fullName: 'user/repo-1',
+      owner: 'user',
       description: 'desc',
       htmlUrl: 'https://github.com/user/repo-1',
       topics: ['a'],
@@ -31,8 +32,11 @@ const mockGitHubRepo: GithubRepository = {
       updatedAt: '2023-01-02T00:00:00Z',
       language: 'TypeScript',
       stargazersCount: 0,
+      homepage: null,
+      archived: false,
     },
   ],
+  fetchExtraPortfolioDescription: async () => null,
 };
 
 const mockArticleRepo: ArticleRepository = {
@@ -77,7 +81,7 @@ describe('PublicWorkApplicationService', () => {
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
-    const items = await uc.getAll();
+    const items = await uc.getAll('en');
     expect(items.length).toBe(3);
     expect(items.some(i => (i as any).workItemType === 'project')).toBe(true);
     expect(items.some(i => (i as any).workItemType === 'article')).toBe(true);
@@ -110,7 +114,7 @@ describe('PublicWorkApplicationService', () => {
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
-    const items = await uc.getAll();
+    const items = await uc.getAll('en');
     expect(items.length).toBe(2); // projects + articles
 
     // Verify error was logged
@@ -157,6 +161,7 @@ describe('PublicWorkApplicationService', () => {
           stargazersCount: 0,
         },
       ],
+      fetchExtraPortfolioDescription: async () => null,
     };
 
     const container = new Container();
@@ -175,7 +180,7 @@ describe('PublicWorkApplicationService', () => {
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
-    const items = await uc.getAll();
+    const items = await uc.getAll('en');
 
     const projects = items.filter(i => (i as any).workItemType === 'project');
 
@@ -214,6 +219,7 @@ describe('PublicWorkApplicationService', () => {
           stargazersCount: 0,
         },
       ],
+      fetchExtraPortfolioDescription: async () => null,
     };
 
     const multiItemArticleRepo: ArticleRepository = {
@@ -272,7 +278,7 @@ describe('PublicWorkApplicationService', () => {
     container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
 
     const uc = container.get(PublicWorkApplicationService);
-    const items = await uc.getAll();
+    const items = await uc.getAll('en');
 
     // Should have 6 items total
     expect(items.length).toBe(6);
@@ -316,6 +322,7 @@ describe('PublicWorkApplicationService', () => {
 
       const githubRepo: GithubRepository = {
         fetchRepositories: callSpy,
+        fetchExtraPortfolioDescription: async () => null,
       } as any;
 
       const container = new Container();
@@ -334,9 +341,9 @@ describe('PublicWorkApplicationService', () => {
       const uc = container.get(PublicWorkApplicationService);
 
       // first call - cache miss expected
-      await uc.getAll();
+      await uc.getAll('en');
       // second call - should hit cache and not call fetchRepositories again
-      await uc.getAll();
+      await uc.getAll('en');
 
       expect(callSpy).toHaveBeenCalledTimes(1);
     });
@@ -364,6 +371,7 @@ describe('PublicWorkApplicationService', () => {
 
       const githubRepo: GithubRepository = {
         fetchRepositories: callSpy,
+        fetchExtraPortfolioDescription: async () => null,
       } as any;
 
       const container = new Container();
@@ -381,14 +389,122 @@ describe('PublicWorkApplicationService', () => {
 
       const uc = container.get(PublicWorkApplicationService);
 
-      await uc.getAll();
+      await uc.getAll('en');
       // advance time beyond TTL
       vi.advanceTimersByTime(2000);
-      await uc.getAll();
+      await uc.getAll('en');
 
       vi.useRealTimers();
 
       expect(callSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should cache results per locale independently', async () => {
+      const callSpy = vi.fn(async () => [
+        {
+          id: 401,
+          name: 'multilang-repo',
+          fullName: 'user/multilang-repo',
+          description: 'multilang',
+          htmlUrl: 'https://github.com/user/multilang-repo',
+          topics: [],
+          createdAt: '2024-01-01T00:00:00Z',
+          updatedAt: '2024-01-02T00:00:00Z',
+          language: null,
+          stargazersCount: 0,
+        },
+      ]);
+
+      const githubRepo: GithubRepository = {
+        fetchRepositories: callSpy,
+        fetchExtraPortfolioDescription: async () => null,
+      } as any;
+
+      const container = new Container();
+      container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(githubRepo);
+      container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(mockArticleRepo);
+      container
+        .bind<CertificationRepository>(CertificationRepositoryToken)
+        .toConstantValue(mockCertRepo);
+      container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+      container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+      container
+        .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+        .to(GetPublicWorkItemsService);
+      container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
+
+      const uc = container.get(PublicWorkApplicationService);
+
+      // First call with 'en' - should fetch
+      await uc.getAll('en');
+      expect(callSpy).toHaveBeenCalledTimes(1);
+
+      // Second call with 'pt-br' - should fetch again (different locale)
+      await uc.getAll('pt-br');
+      expect(callSpy).toHaveBeenCalledTimes(2);
+
+      // Third call with 'en' - should hit cache (not fetch)
+      await uc.getAll('en');
+      expect(callSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should return different content for different locales', async () => {
+      const enArticles = [
+        {
+          id: 'a1',
+          title: 'English Article',
+          description: 'English description',
+          link: 'https://notion.so/a1',
+          tags: ['en'],
+          publishedAt: '2024-10-10T00:00:00Z',
+        },
+      ];
+
+      const ptBrArticles = [
+        {
+          id: 'a1',
+          title: 'Artigo Português',
+          description: 'Descrição em português',
+          link: 'https://notion.so/a1',
+          tags: ['pt-br'],
+          publishedAt: '2024-10-10T00:00:00Z',
+        },
+      ];
+
+      const articleRepo: ArticleRepository = {
+        fetchArticles: vi.fn(async (locale: string) => {
+          if (locale === 'en') return enArticles;
+          if (locale === 'pt-br') return ptBrArticles;
+          return [];
+        }),
+      };
+
+      const container = new Container();
+      container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(mockGitHubRepo);
+      container.bind<ArticleRepository>(ArticleRepositoryToken).toConstantValue(articleRepo);
+      container
+        .bind<CertificationRepository>(CertificationRepositoryToken)
+        .toConstantValue(mockCertRepo);
+      container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+      container.bind<Logger>(LoggerToken).toConstantValue(new MockLogger());
+      container
+        .bind<GetPublicWorkItemsService>(GetPublicWorkItemsServiceToken)
+        .to(GetPublicWorkItemsService);
+      container.bind<PublicWorkApplicationService>(PublicWorkApplicationService).toSelf();
+
+      const uc = container.get(PublicWorkApplicationService);
+
+      // Get English content
+      const enItems = await uc.getAll('en');
+      const enArticle = enItems.find(i => (i as any).workItemType === 'article') as any;
+      expect(enArticle.title).toBe('English Article');
+      expect(enArticle.description).toBe('English description');
+
+      // Get Portuguese content
+      const ptBrItems = await uc.getAll('pt-br');
+      const ptBrArticle = ptBrItems.find(i => (i as any).workItemType === 'article') as any;
+      expect(ptBrArticle.title).toBe('Artigo Português');
+      expect(ptBrArticle.description).toBe('Descrição em português');
     });
   });
 });

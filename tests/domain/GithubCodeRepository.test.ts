@@ -1,8 +1,12 @@
 import { expect, test } from 'vitest';
+import { Container } from 'inversify';
 import { GithubCodeRepository } from '@/core/domain/GithubCodeRepository';
-import { ProjectFactory } from '@/core/domain/ProjectFactory';
+import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
+import type { GithubRepository } from '@/core/domain/GithubRepository';
+import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
+import { Locale } from '@/core/domain/Locale';
 
-test('can instantiate GithubCodeRepository and use it in ProjectFactory', () => {
+test('can instantiate GithubCodeRepository and use it in ProjectFactory', async () => {
   const repo = new GithubCodeRepository(
     999,
     'instantiated',
@@ -19,12 +23,21 @@ test('can instantiate GithubCodeRepository and use it in ProjectFactory', () => 
     false
   );
 
-  const factory = new ProjectFactory();
-  const project = factory.create(repo);
+  const githubRepo: GithubRepository = {
+    fetchRepositories: async () => [],
+    fetchExtraPortfolioDescription: async () => null,
+  };
+
+  const container = new Container();
+  container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(githubRepo);
+  container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+
+  const factory = container.get<ProjectFactory>(ProjectFactoryToken);
+  const project = await factory.create(repo, Locale.EN);
   expect(project.id).toBe('gh-999');
 });
 
-test('can use plain object shaped like GithubCodeRepository with ProjectFactory', () => {
+test('can use plain object shaped like GithubCodeRepository with ProjectFactory', async () => {
   const repoPlain = {
     id: 1000,
     name: 'plain',
@@ -38,7 +51,16 @@ test('can use plain object shaped like GithubCodeRepository with ProjectFactory'
     stargazersCount: 2,
   } as unknown as GithubCodeRepository;
 
-  const factory = new ProjectFactory();
-  const project = factory.create(repoPlain as any);
+  const githubRepo: GithubRepository = {
+    fetchRepositories: async () => [],
+    fetchExtraPortfolioDescription: async () => null,
+  };
+
+  const container = new Container();
+  container.bind<GithubRepository>(GithubRepositoryToken).toConstantValue(githubRepo);
+  container.bind<ProjectFactory>(ProjectFactoryToken).to(ProjectFactory);
+
+  const factory = container.get<ProjectFactory>(ProjectFactoryToken);
+  const project = await factory.create(repoPlain as any, Locale.EN);
   expect(project.id).toBe('gh-1000');
 });

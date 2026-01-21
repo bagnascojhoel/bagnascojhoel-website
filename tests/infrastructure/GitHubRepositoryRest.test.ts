@@ -1,11 +1,11 @@
 /// <reference types="vitest" />
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { GithubRepositoryRestAdapter } from '../../src/core/infrastructure/GithubRepositoryRestAdapter';
 import { MockLogger } from '../fixtures/mockLogger';
+import { Locale } from '../../src/core/domain/Locale';
 
 // Mock GitHub API response
 const mockGitHubApiResponse = [
@@ -68,7 +68,88 @@ describe('GitHubRepositoryRest', () => {
   afterAll(() => {
     server.close();
   });
-
+  describe('fetchExtraPortfolioDescription', () => {
+    it('should return extra description for English locale', async () => {
+      server.use(
+        http.get(
+          'https://api.github.com/repos/bagnascojhoel/test-repo/contents/portfolio-description_en.json',
+          () => {
+            return HttpResponse.json({
+              title: 'Test Project',
+              description: 'Test description',
+              tags: ['test', 'project'],
+              websiteUrl: 'https://example.com',
+            });
+          }
+        )
+      );
+      const result = await repository.fetchExtraPortfolioDescription(
+        'bagnascojhoel',
+        'test-repo',
+        Locale.EN
+      );
+      expect(result).not.toBeNull();
+      expect(result?.title).toBe('Test Project');
+      expect(result?.customDescription).toBe('Test description');
+      expect(result?.customTopics).toEqual(['test', 'project']);
+      expect(result?.websiteUrl).toBe('https://example.com');
+    });
+    it('should return extra description for Portuguese locale', async () => {
+      server.use(
+        http.get(
+          'https://api.github.com/repos/bagnascojhoel/test-repo/contents/portfolio-description_pt-br.json',
+          () => {
+            return HttpResponse.json({
+              title: 'Projeto de Teste',
+              description: 'Descrição de teste',
+              tags: ['teste', 'projeto'],
+            });
+          }
+        )
+      );
+      const result = await repository.fetchExtraPortfolioDescription(
+        'bagnascojhoel',
+        'test-repo',
+        Locale.PT_BR
+      );
+      expect(result).not.toBeNull();
+      expect(result?.title).toBe('Projeto de Teste');
+      expect(result?.customDescription).toBe('Descrição de teste');
+      expect(result?.customTopics).toEqual(['teste', 'projeto']);
+    });
+    it('should return null for 404 response (missing file)', async () => {
+      server.use(
+        http.get(
+          'https://api.github.com/repos/bagnascojhoel/test-repo/contents/portfolio-description_en.json',
+          () => {
+            return new HttpResponse(null, { status: 404 });
+          }
+        )
+      );
+      const result = await repository.fetchExtraPortfolioDescription(
+        'bagnascojhoel',
+        'test-repo',
+        Locale.EN
+      );
+      expect(result).toBeNull();
+    });
+    it('should return null for 403 response (rate limit)', async () => {
+      server.use(
+        http.get(
+          'https://api.github.com/repos/bagnascojhoel/test-repo/contents/portfolio-description_en.json',
+          () => {
+            return new HttpResponse(null, { status: 403 });
+          }
+        )
+      );
+      const result = await repository.fetchExtraPortfolioDescription(
+        'bagnascojhoel',
+        'test-repo',
+        Locale.EN
+      );
+      expect(result).toBeNull();
+    });
+  });
   describe('fetchRepositories', () => {
     it('should return mocked GitHub repositories', async () => {
       const result = await repository.fetchRepositories();

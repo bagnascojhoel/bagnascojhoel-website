@@ -274,7 +274,9 @@ extras?) Logic: Merge GitHub repo data with optional extras, prioritize extras f
 
 ## Output Format
 
-All proposals should include:
+### For Simple Analysis/Proposals
+
+Provide inline responses with:
 
 1. **📋 Summary** (3-5 sentences)
 2. **🔍 Analysis** (what exists, what's missing, what's affected)
@@ -284,5 +286,24 @@ All proposals should include:
 6. **🎨 Diagrams** (mermaid diagrams for complex changes)
 7. **📚 References** (links to existing files, documentation, standards)
 
-For complex proposals (>1000 words or with diagrams), create a markdown file in
-`.ai/proposals/<proposal-name>.md`.
+### For Complex Implementation Plans
+
+When creating comprehensive implementation plans for new features or architectural changes:
+
+1. **Use the template**: Follow
+   [`.ai/templates/implementation-plan.md`](/.ai/templates/implementation-plan.md)
+2. **Save to**: `.ai/features/<feature-name>/implementation-plan.md`
+3. **Include all sections**:
+   - Summary with architectural principles
+   - Analysis (current state, impact analysis)
+   - Proposed solution with detailed phases
+   - Trade-offs with ratings
+   - Validation checklist
+   - Architecture and sequence diagrams
+   - File structure summary
+   - Implementation order with checkpoints
+   - Success criteria
+   - References and future enhancements
+
+The template provides detailed instructions for AI agents on how to fill each section and what to
+consider during planning.

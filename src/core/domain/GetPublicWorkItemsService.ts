@@ -12,6 +12,7 @@ import type { ArticleRepository } from './ArticleRepository';
 import { PublicWorkItem } from './PublicWorkItem';
 import { Article } from './Article';
 import { inject, injectable } from 'inversify';
+import { DEFAULT_LOCALE, Locale } from './Locale';
 
 const GITHUB_CODE_REPOSITORIES_IDX = 0;
 const ARTICLES_IDX = 1;
@@ -27,10 +28,10 @@ export class GetPublicWorkItemsService {
     @inject(LoggerToken) private logger: Logger
   ) {}
 
-  public async getAll(): Promise<PublicWorkItem[]> {
-    const requests = await this.getRequests();
-    const projectRequests = this.getGithubCodeRepositories(requests).map(
-      this.projectFactory.create
+  public async getAll(locale: Locale): Promise<PublicWorkItem[]> {
+    const requests = await this.getRequests(locale);
+    const projectRequests = this.getGithubCodeRepositories(requests).map(repo =>
+      this.projectFactory.create(repo, locale)
     );
     const projects = (await Promise.all(projectRequests))
       .filter(p => p.isVisible())
@@ -42,7 +43,9 @@ export class GetPublicWorkItemsService {
     return this.shuffleWorkItems([...projects, ...articles, ...certifications]);
   }
 
-  private async getRequests(): Promise<
+  private async getRequests(
+    locale: Locale
+  ): Promise<
     [
       PromiseSettledResult<GithubCodeRepository[]>,
       PromiseSettledResult<Article[]>,
@@ -51,9 +54,39 @@ export class GetPublicWorkItemsService {
   > {
     return await Promise.allSettled([
       this.githubRepository.fetchRepositories(),
-      this.articleRepository.fetchArticles(),
-      this.certificationRepository.fetchCertifications(),
+      this.fetchArticlesWithFallback(locale),
+      this.fetchCertificationsWithFallback(locale),
     ]);
+  }
+
+  private async fetchArticlesWithFallback(locale: Locale): Promise<Article[]> {
+    try {
+      return await this.articleRepository.fetchArticles(locale);
+    } catch (error) {
+      if (locale !== DEFAULT_LOCALE) {
+        this.logger.addBreadcrumb('Falling back to default locale for articles', {
+          requestedLocale: locale,
+          fallbackLocale: DEFAULT_LOCALE,
+        });
+        return await this.articleRepository.fetchArticles(DEFAULT_LOCALE);
+      }
+      throw error;
+    }
+  }
+
+  private async fetchCertificationsWithFallback(locale: Locale): Promise<Certification[]> {
+    try {
+      return await this.certificationRepository.fetchCertifications(locale);
+    } catch (error) {
+      if (locale !== DEFAULT_LOCALE) {
+        this.logger.addBreadcrumb('Falling back to default locale for certifications', {
+          requestedLocale: locale,
+          fallbackLocale: DEFAULT_LOCALE,
+        });
+        return await this.certificationRepository.fetchCertifications(DEFAULT_LOCALE);
+      }
+      throw error;
+    }
   }
 
   private getGithubCodeRepositories(

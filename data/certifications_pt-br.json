@@ -1,0 +1,26 @@
+[
+  {
+    "id": "50a477a5-c17d-4670-898c-943980634922",
+    "type": "Certificação",
+    "title": "Spring Professional Certification",
+    "description": "Notas do exame de certificação Spring Professional da VMWare.",
+    "tags": ["Certificação", "Back-End Web", "Java", "Código Aberto"],
+    "link": "https://www.notion.so/50a477a5c17d4670898c943980634922"
+  },
+  {
+    "id": "21f63263-de6e-4510-967c-989d3def8859",
+    "type": "Certificação",
+    "title": "AWS Cloud Practitioner",
+    "description": "Notas dos meus estudos para a certificação AWS Cloud.",
+    "tags": ["AWS", "Nuvem", "Certificação"],
+    "link": "https://www.notion.so/21f63263de6e4510967c989d3def8859"
+  },
+  {
+    "id": "32cf2d0f-2ded-4011-b8dc-0eca3e0cd4e7",
+    "type": "Certificação",
+    "title": "Java SE 11 Developer",
+    "description": "Notas de estudo para certificação.",
+    "tags": ["Java", "Oracle", "Certificação"],
+    "link": "https://www.notion.so/32cf2d0f2ded4011b8dc0eca3e0cd4e7"
+  }
+]

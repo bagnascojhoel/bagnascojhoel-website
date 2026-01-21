@@ -1,0 +1,34 @@
+[
+  {
+    "id": "4fcb3f28-17a6-49ac-9015-cba3f6d4cb10",
+    "title": "Improving RAM Usage by 50% with GraalVM",
+    "description": "I was able to drastically improve the performance of my Spring Boot REST API by generating a Native Image with the GraalVM toolkit. The \"drastically\" adjective translates to numbers as:",
+    "tags": ["GraalVM", "Java", "Performance", "Spring Boot"],
+    "link": "https://www.notion.so/4fcb3f2817a649ac9015cba3f6d4cb10",
+    "publishedAt": "2024-09-23T00:00:00Z"
+  },
+  {
+    "id": "10ab4ca7-bcb5-807a-bc2c-d1e6ddd0491c",
+    "title": "Reduzindo o Uso de RAM em 50% com GraalVM",
+    "description": "Consegui melhorar drasticamente o desempenho da minha API REST Spring Boot gerando uma imagem nativa com o toolkit GraalVM. O adjetivo \"drasticamente\" se traduz nos seguintes números:",
+    "tags": ["GraalVM", "Java", "Performance", "Spring Boot"],
+    "link": "https://www.notion.so/10ab4ca7bcb5807abc2cd1e6ddd0491c",
+    "publishedAt": "2024-09-23T00:00:00Z"
+  },
+  {
+    "id": "10ab4ca7-bcb5-8053-829e-cb065c52ddce",
+    "title": "Reflections on Working Effectively with Legacy Code",
+    "description": "Software projects are built to life for decades. If a project reaches this lifespan, there's a high chance that a significant portion of it—if not the majority—will be considered legacy code. In fact, even younger projects can already contain legacy code. That's why I believe it's essential for every developer to know how to handle these situations.",
+    "tags": ["Legacy Code", "Software Development", "Refactoring", "Testing"],
+    "link": "https://www.notion.so/10ab4ca7bcb58053829ecb065c52ddce",
+    "publishedAt": "2024-09-23T00:00:00Z"
+  },
+  {
+    "id": "d5e8af76-e791-4c28-a889-6ea0f921b999",
+    "title": "Reflexões Sobre Trabalho Eficaz com Código Legado",
+    "description": "Projetos de software são criados para durar décadas. Se um projeto alcança esse tempo de vida, há grandes chances de boa parte dele — senão a maioria — ser considerada código legado. Aliás, mesmo projetos jovens já podem conter código legado. Por isso, acredito que seja essencial para qualquer programador saber lidar com esse tipo de situação.",
+    "tags": ["Código Legado", "Desenvolvimento de Software", "Refatoração", "Testes"],
+    "link": "https://www.notion.so/d5e8af76e7914c28a8896ea0f921b999",
+    "publishedAt": "2024-09-23T00:00:00Z"
+  }
+]

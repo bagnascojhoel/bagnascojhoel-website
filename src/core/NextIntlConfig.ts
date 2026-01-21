@@ -1,15 +1,14 @@
 import { getRequestConfig } from 'next-intl/server';
 import { container } from '@/core/ContainerConfig';
 import {
-  LocalizationApplicationService,
-  LocalizationApplicationServiceToken,
-} from '@/core/application-services/LocalizationApplicationService';
+  MessagesApplicationService,
+  MessagesApplicationServiceToken,
+} from '@/core/application-services/MessagesApplicationService';
 
 export default getRequestConfig(async params => {
   const locale = (await params.requestLocale)!;
-
   const messages = await container
-    .get<LocalizationApplicationService>(LocalizationApplicationServiceToken)
+    .get<MessagesApplicationService>(MessagesApplicationServiceToken)
     .getLocalizedMessages(locale);
   return { locale, messages };
 });
