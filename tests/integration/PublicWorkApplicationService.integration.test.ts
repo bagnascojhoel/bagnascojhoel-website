@@ -9,6 +9,7 @@ import { PublicWorkApplicationService } from '@/core/application-services/Public
 import { GithubRepositoryRestAdapter } from '@/core/infrastructure/GithubRepositoryRestAdapter';
 import { ArticleRepositoryJsonAdapter } from '@/core/infrastructure/ArticleRepositoryJsonAdapter';
 import { CertificationRepositoryJsonAdapter } from '@/core/infrastructure/CertificationRepositoryJsonAdapter';
+import { FetchHttpClientAdapter } from '@/core/infrastructure/FetchHttpClientAdapter';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import {
   GetPublicWorkItemsService,
@@ -19,10 +20,12 @@ import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { ArticleRepository } from '@/core/domain/ArticleRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
 import type { Logger } from '@/core/domain/Logger';
+import type { HttpClient } from '@/core/domain/HttpClient';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { ArticleRepositoryToken } from '@/core/domain/ArticleRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LoggerToken } from '@/core/domain/Logger';
+import { HttpClientToken } from '@/core/domain/HttpClient';
 
 // Mock GitHub API response data
 const mockGitHubApiResponse = [
@@ -100,6 +103,7 @@ describe('PublicWorkApplicationService Integration Tests', () => {
       const container = new Container();
       const logger = new MockLogger();
 
+      container.bind<HttpClient>(HttpClientToken).to(FetchHttpClientAdapter);
       container.bind<GithubRepository>(GithubRepositoryToken).to(GithubRepositoryRestAdapter);
       container.bind<ArticleRepository>(ArticleRepositoryToken).to(ArticleRepositoryJsonAdapter);
       container

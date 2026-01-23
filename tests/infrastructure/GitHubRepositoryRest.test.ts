@@ -1,9 +1,10 @@
 /// <reference types="vitest" />
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { describe, it, expect, beforeAll, afterEach, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterEach, afterAll, beforeEach } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { GithubRepositoryRestAdapter } from '../../src/core/infrastructure/GithubRepositoryRestAdapter';
+import { FetchHttpClientAdapter } from '../../src/core/infrastructure/FetchHttpClientAdapter';
 import { MockLogger } from '../fixtures/mockLogger';
 import { Locale } from '../../src/core/domain/Locale';
 
@@ -52,13 +53,17 @@ const server = setupServer(
 
 describe('GitHubRepositoryRest', () => {
   let repository: GithubRepositoryRestAdapter;
+  let mockLogger: MockLogger;
+  let httpClient: FetchHttpClientAdapter;
 
   beforeAll(() => {
     server.listen({ onUnhandledRequest: 'warn' });
   });
 
   beforeEach(() => {
-    repository = new GithubRepositoryRestAdapter(new MockLogger());
+    mockLogger = new MockLogger();
+    httpClient = new FetchHttpClientAdapter(mockLogger);
+    repository = new GithubRepositoryRestAdapter(mockLogger, httpClient);
   });
 
   afterEach(() => {

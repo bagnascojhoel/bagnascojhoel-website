@@ -11,7 +11,8 @@ interface WorkItemProps {
 }
 
 const WorkItem = ({ item }: WorkItemProps) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const initialExpanded = 'startsOpen' in item ? (item.startsOpen ?? false) : false;
+  const [isExpanded, setIsExpanded] = useState(initialExpanded);
   const t = useTranslations('Work');
 
   const toggleExpand = (e: React.MouseEvent) => {

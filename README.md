@@ -1,60 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with
-[`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BagnascoJhoel Website
+
+A modern portfolio website built with Next.js 14, showcasing projects, articles, and certifications.
+
+## Features
+
+- **Portfolio Projects**: Displays GitHub repositories with optional custom descriptions.
+- **Articles**: Blog posts fetched from Notion.
+- **Certifications**: Professional certifications with links.
+- **Internationalization**: Supports English and Portuguese (Brazil).
+- **Responsive Design**: Mobile-first with Tailwind CSS.
+- **Animations**: Smooth transitions using Framer Motion.
+- **Accessibility**: WCAG 2.1 compliant.
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Architecture**: Hexagonal Architecture (Ports & Adapters)
+- **DI**: InversifyJS
+- **i18n**: next-intl
+- **Testing**: Vitest
+- **Linting**: ESLint
+- **Formatting**: Prettier
+
+## Architecture
+
+The project follows Hexagonal Architecture:
+
+- **Domain**: Core business logic and entities.
+- **Application Services**: Use cases and orchestration.
+- **Infrastructure**: Adapters for external services (GitHub, Notion, etc.).
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js 18+
+- npm or yarn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the
-file.
+1. Clone the repository:
 
-This project uses
-[`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to
-automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone https://github.com/bagnascojhoel/bagnascojhoel-website.git
+   cd bagnascojhoel-website
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Run the development server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback
-and contributions are welcome!
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
+## Development
 
-Check out our
-[Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
-for more details.
+- **Linting**: `npm run lint`
+- **Formatting**: `npm run format`
+- **Testing**: `npm test`
+- **Coverage**: `npm run test:coverage`
+
+## Deployment
+
+Deploy to Vercel or any platform supporting Next.js.
 
 ## Extra portfolio descriptions
 
 - The site supports optional `.portfolio-description.json` files in individual GitHub repositories
   to provide richer metadata for projects (custom title, tags, website, complexity, etc.).
-- See `.ai/features/github-extra-descriptions/SCHEMA.md` for the schema and examples.
+
+### Schema
+
+The `.portfolio-description.json` file should conform to the following TypeScript interface:
+
+```typescript
+interface ExtraPortfolioDescription {
+  title: string; // Required: Custom title for the project
+  customDescription?: string; // Optional: Custom description
+  customTopics?: string[]; // Optional: Array of custom topic strings
+  websiteUrl?: string; // Optional: URL to the project's website
+  complexity?: 'extreme' | 'high' | 'medium' | 'low'; // Optional: Project complexity level
+  startsOpen?: boolean; // Optional: Whether the project details start expanded
+  showEvenArchived?: boolean; // Optional: Show even if repository is archived
+  isHidden?: boolean; // Optional: Hide the project from the portfolio
+}
+```
 
 ## To Do's
 
-- Certifications and articles should be retrieved dynamically without needing a redeploy.
 - Certifications should have a link to the certification badge/certificate.
-- Should localize the action labels for certifications and articles.
 - Use the startsOpen flag from portfolio-description.json.
 - Introduce a ignore flag on portfolio-description.json that makes the project ignored.
 - Update project README.

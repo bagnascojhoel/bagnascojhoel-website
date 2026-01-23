@@ -4,17 +4,20 @@ import type { GithubRepository } from '@/core/domain/GithubRepository';
 import type { ArticleRepository } from '@/core/domain/ArticleRepository';
 import type { CertificationRepository } from '@/core/domain/CertificationRepository';
 import type { Logger } from '@/core/domain/Logger';
+import type { HttpClient } from '@/core/domain/HttpClient';
 import { LocalizedMessagesRepositoryToken } from '@/core/domain/LocalizedMessagesRepository';
 import { GithubRepositoryToken } from '@/core/domain/GithubRepository';
 import { ArticleRepositoryToken } from '@/core/domain/ArticleRepository';
 import { CertificationRepositoryToken } from '@/core/domain/CertificationRepository';
 import { LoggerToken } from '@/core/domain/Logger';
+import { HttpClientToken } from '@/core/domain/HttpClient';
 import { LocalizedMessagesRepositoryJsonAdapter } from '@/core/infrastructure/LocalizedMessagesRepositoryJson';
 import { GithubRepositoryRestAdapter } from '@/core/infrastructure/GithubRepositoryRestAdapter';
 import { ArticleRepositoryJsonAdapter } from '@/core/infrastructure/ArticleRepositoryJsonAdapter';
 import { CertificationRepositoryJsonAdapter } from '@/core/infrastructure/CertificationRepositoryJsonAdapter';
 import { LoggerSentryAdapter } from '@/core/infrastructure/LoggerSentryAdapter';
 import { LoggerConsoleAdapter } from '@/core/infrastructure/LoggerConsoleAdapter';
+import { FetchHttpClientAdapter } from '@/core/infrastructure/FetchHttpClientAdapter';
 import { ProjectFactory, ProjectFactoryToken } from '@/core/domain/ProjectFactory';
 import {
   MessagesApplicationService,
@@ -56,6 +59,9 @@ container
   .bind<Logger>(LoggerToken)
   .to(isProduction && !isTest ? LoggerSentryAdapter : LoggerConsoleAdapter)
   .inSingletonScope();
+
+// HTTP client binding - centralized HTTP logging
+container.bind<HttpClient>(HttpClientToken).to(FetchHttpClientAdapter).inSingletonScope();
 
 // application-service bindings
 

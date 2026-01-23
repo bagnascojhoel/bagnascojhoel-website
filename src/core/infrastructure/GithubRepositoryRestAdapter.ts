@@ -5,6 +5,8 @@ import { ExtraPortfolioDescription } from '@/core/domain/ExtraPortfolioDescripti
 import { Complexity } from '@/core/domain/Complexity';
 import type { Logger } from '@/core/domain/Logger';
 import { LoggerToken } from '@/core/domain/Logger';
+import type { HttpClient } from '@/core/domain/HttpClient';
+import { HttpClientToken } from '@/core/domain/HttpClient';
 import { Locale } from '@/core/domain/Locale';
 import { GithubCodeRepositoryJson } from '@/core/infrastructure/GithubCodeRepositoryJson';
 import { ExternalServiceError } from '@/core/domain/ExternalServiceError';
@@ -19,13 +21,16 @@ export class GithubRepositoryRestAdapter implements GithubRepository {
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  constructor(@inject(LoggerToken) private logger: Logger) {}
+  constructor(
+    @inject(LoggerToken) private logger: Logger,
+    @inject(HttpClientToken) private httpClient: HttpClient
+  ) {}
 
   async fetchRepositories(): Promise<GithubCodeRepository[]> {
     const url = `${this.baseUrl}/users/${this.username}/repos?per_page=100&sort=pushed&direction=desc`;
     let response: Response;
     try {
-      response = await fetch(url, {
+      response = await this.httpClient.fetch(url, {
         headers: { ...this.baseHeaders, Accept: 'application/vnd.github.v3+json' },
       });
     } catch {
@@ -61,7 +66,7 @@ export class GithubRepositoryRestAdapter implements GithubRepository {
   ): Promise<ExtraPortfolioDescription | null> {
     const filename = `portfolio-description_${locale}.json`;
     const url = `${this.baseUrl}/repos/${owner}/${repo}/contents/${filename}`;
-    const res = await fetch(url, {
+    const res = await this.httpClient.fetch(url, {
       headers: { ...this.baseHeaders, Accept: 'application/vnd.github.v3.raw' },
     });
     if (res.status === 404) return null;

@@ -59,4 +59,63 @@ describe('WorkItem', () => {
 
     expect(screen.getByText('Certification')).toBeInTheDocument();
   });
+
+  it('renders work item as collapsed by default when startsOpen is false', () => {
+    const item = {
+      workItemType: 'project',
+      title: 'Test Project',
+      description: 'Test description',
+      tags: ['tag1'],
+      link: '#',
+      startsOpen: false,
+    } as any;
+
+    render(
+      <NextIntlClientProvider locale="en" messages={en}>
+        <WorkItem item={item} />
+      </NextIntlClientProvider>
+    );
+
+    expect(screen.getByText('Test Project')).toBeInTheDocument();
+    expect(screen.queryByText('Test description')).not.toBeInTheDocument();
+  });
+
+  it('renders work item as expanded by default when startsOpen is true', () => {
+    const item = {
+      workItemType: 'project',
+      title: 'Test Project',
+      description: 'Test description',
+      tags: ['tag1'],
+      link: '#',
+      startsOpen: true,
+    } as any;
+
+    render(
+      <NextIntlClientProvider locale="en" messages={en}>
+        <WorkItem item={item} />
+      </NextIntlClientProvider>
+    );
+
+    expect(screen.getByText('Test Project')).toBeInTheDocument();
+    expect(screen.getByText('Test description')).toBeInTheDocument();
+  });
+
+  it('renders work item as collapsed by default when startsOpen is not provided', () => {
+    const item = {
+      workItemType: 'project',
+      title: 'Test Project',
+      description: 'Test description',
+      tags: ['tag1'],
+      link: '#',
+    } as any;
+
+    render(
+      <NextIntlClientProvider locale="en" messages={en}>
+        <WorkItem item={item} />
+      </NextIntlClientProvider>
+    );
+
+    expect(screen.getByText('Test Project')).toBeInTheDocument();
+    expect(screen.queryByText('Test description')).not.toBeInTheDocument();
+  });
 });
