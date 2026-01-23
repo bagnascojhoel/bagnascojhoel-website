@@ -1,26 +1,10 @@
 [
   {
-    "id": "4fcb3f28-17a6-49ac-9015-cba3f6d4cb10",
-    "title": "Melhorando o Uso de RAM em 50% com GraalVM",
-    "description": "Consegui melhorar drasticamente o desempenho da minha API REST Spring Boot gerando uma Imagem Nativa com o toolkit GraalVM. O adjetivo \"drasticamente\" se traduz em números como:",
-    "tags": ["GraalVM", "Java", "Desempenho", "Spring Boot"],
-    "link": "https://www.notion.so/4fcb3f2817a649ac9015cba3f6d4cb10",
-    "publishedAt": "2024-09-23T00:00:00Z"
-  },
-  {
     "id": "10ab4ca7-bcb5-807a-bc2c-d1e6ddd0491c",
     "title": "Reduzindo o Uso de RAM em 50% com GraalVM",
     "description": "Consegui melhorar drasticamente o desempenho da minha API REST Spring Boot gerando uma imagem nativa com o toolkit GraalVM. O adjetivo \"drasticamente\" se traduz nos seguintes números:",
     "tags": ["GraalVM", "Java", "Performance", "Spring Boot"],
     "link": "https://www.notion.so/10ab4ca7bcb5807abc2cd1e6ddd0491c",
-    "publishedAt": "2024-09-23T00:00:00Z"
-  },
-  {
-    "id": "10ab4ca7-bcb5-8053-829e-cb065c52ddce",
-    "title": "Reflexões Sobre Trabalhar Eficazmente com Código Legado",
-    "description": "Projetos de software são construídos para durar décadas. Se um projeto alcança essa longevidade, há uma grande chance de que uma parte significativa dele — se não a maioria — seja considerada código legado. Na verdade, até projetos mais jovens já podem conter código legado. É por isso que acredito ser essencial que todo desenvolvedor saiba lidar com essas situações.",
-    "tags": ["Código Legado", "Desenvolvimento de Software", "Refatoração", "Testes"],
-    "link": "https://www.notion.so/10ab4ca7bcb58053829ecb065c52ddce",
     "publishedAt": "2024-09-23T00:00:00Z"
   },
   {
