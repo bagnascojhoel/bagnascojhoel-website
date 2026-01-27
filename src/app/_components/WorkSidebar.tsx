@@ -1,12 +1,27 @@
 import React from 'react';
-import WorkItem from './WorkItem';
+import CertificationWorkItem from './CertificationWorkItem';
+import ProjectWorkItem from './ProjectWorkItem';
+import ArticleWorkItem from './ArticleWorkItem';
 import { getTranslations } from 'next-intl/server';
 import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
-
+import { Certification } from '@/core/domain/Certification';
+import { Project } from '@/core/domain/Project';
+import { Article } from '@/core/domain/Article';
 interface WorkSidebarProps {
   items?: PublicWorkItem[];
 }
-
+const renderWorkItem = (item: PublicWorkItem) => {
+  switch (item.workItemType) {
+    case 'certification':
+      return <CertificationWorkItem key={item.id} item={item as Certification} />;
+    case 'project':
+      return <ProjectWorkItem key={item.id} item={item as Project} />;
+    case 'article':
+      return <ArticleWorkItem key={item.id} item={item as Article} />;
+    default:
+      return null;
+  }
+};
 const WorkSidebar = async ({ items = [] }: WorkSidebarProps) => {
   const t = await getTranslations('Work');
   const workItems: PublicWorkItem[] = items;
@@ -22,11 +37,7 @@ const WorkSidebar = async ({ items = [] }: WorkSidebarProps) => {
           <p className="text-muted-foreground leading-relaxed max-w-2xl">{t('subtitle')}</p>
         </div>
 
-        <div className="flex flex-col gap-3">
-          {workItems.map(item => (
-            <WorkItem key={item.id} item={item} />
-          ))}
-        </div>
+        <div className="flex flex-col gap-3">{workItems.map(renderWorkItem)}</div>
       </div>
     </section>
   );

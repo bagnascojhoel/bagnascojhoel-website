@@ -45,7 +45,9 @@
   "Work": {
     "title": "Trabalhos Públicos",
     "subtitle": "Seleção de alguns estudos, artigos e projetos de código aberto.",
-    "viewProject": "Ver Projeto",
+    "viewCode": "Ver Código",
+    "viewCertificate": "Ver Certificado",
+    "readArticle": "Ler Artigo",
     "type": {
       "article": "Artigo",
       "certification": "Certificação",

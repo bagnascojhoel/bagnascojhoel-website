@@ -52,7 +52,6 @@ describe('ProjectFactory', () => {
             customDescription: 'Extra description in default locale',
             websiteUrl: 'https://example.com',
             complexity: 'medium' as const,
-            startsOpen: false,
           };
         },
       };
@@ -113,7 +112,6 @@ describe('ProjectFactory', () => {
               customDescription: 'Enhanced description',
               websiteUrl: 'https://project-website.com',
               complexity: 'high' as const,
-              startsOpen: true,
             };
           }
           return null;
@@ -129,7 +127,6 @@ describe('ProjectFactory', () => {
       expect(project.description).toBe('Enhanced description');
       expect(project.websiteUrl).toBe('https://project-website.com');
       expect(project.complexity).toBe('high');
-      expect(project.startsOpen).toBe(true);
     });
 
     it('should create project without extras when fetchExtraPortfolioDescription returns null', async () => {

@@ -6,7 +6,6 @@ export interface ExtraPortfolioDescription {
   customTopics?: string[];
   websiteUrl?: string;
   complexity?: Complexity;
-  startsOpen?: boolean;
   showEvenArchived?: boolean;
   isHidden?: boolean;
 }

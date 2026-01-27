@@ -9,7 +9,6 @@ export class Project {
     public readonly updatedAt?: string,
     public readonly websiteUrl?: string,
     public readonly complexity?: string,
-    public readonly startsOpen?: boolean,
     public readonly hidden?: boolean
   ) {}
 
@@ -32,7 +31,6 @@ export class ProjectBuilder {
   private _updatedAt?: string;
   private _websiteUrl?: string;
   private _complexity?: string;
-  private _startsOpen?: boolean;
   private _hidden?: boolean;
 
   withId(id: string): ProjectBuilder {
@@ -80,11 +78,6 @@ export class ProjectBuilder {
     return this;
   }
 
-  withStartsOpen(startsOpen: boolean): ProjectBuilder {
-    this._startsOpen = startsOpen;
-    return this;
-  }
-
   withHidden(hidden: boolean): ProjectBuilder {
     this._hidden = hidden;
     return this;
@@ -107,7 +100,6 @@ export class ProjectBuilder {
       this._updatedAt,
       this._websiteUrl,
       this._complexity,
-      this._startsOpen,
       this._hidden
     );
   }

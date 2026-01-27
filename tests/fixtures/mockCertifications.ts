@@ -7,7 +7,7 @@ export const mockCertification1: Certification = {
   description:
     'Comprehensive certification covering AWS services, architecture design patterns, and cloud best practices.',
   tags: ['AWS', 'Cloud', 'Architecture'],
-  link: 'https://aws.amazon.com/certification/',
+  certificationUrl: 'https://aws.amazon.com/certification/',
 };
 
 export const mockCertification2: Certification = {
@@ -16,7 +16,7 @@ export const mockCertification2: Certification = {
   description:
     'Advanced Java certification covering modern Java features, concurrency, and best practices.',
   tags: ['Java', 'Oracle', 'Certification'],
-  link: 'https://www.oracle.com/java/technologies/javase-certifications.html',
+  certificationUrl: 'https://www.oracle.com/java/technologies/javase-certifications.html',
 };
 
 export const mockCertifications: Certification[] = [mockCertification1, mockCertification2];

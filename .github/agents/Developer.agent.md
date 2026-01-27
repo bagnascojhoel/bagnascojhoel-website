@@ -58,7 +58,6 @@ You must use the following tools to accomplish your tasks:
 - `npm run test:e2e` or `pnpm test:e2e` - Run end-to-end tests.
 - `npm run lint` or `pnpm lint` - Lint the codebase.
 - `npm run format` or `pnpm format` - Format the codebase according to project standards (Prettier).
-- `npm run type-check` or `pnpm type-check` - Run TypeScript type checking.
 - #tool:usages - Find all usages of a specific class, method, or variable.
 - #tool:changes - Review changes made in the codebase.
 - #tool:runSubagent - Delegate specific sub-tasks to specialized agents.

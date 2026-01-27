@@ -16,7 +16,7 @@ describe('CertificationRepositoryJson', () => {
     it('should return English certifications for locale "en"', async () => {
       const result = await repository.fetchCertifications(Locale.EN);
       expect(result).toBeDefined();
-      expect(result).toHaveLength(3);
+      expect(result).toHaveLength(2);
     });
     it('should return Portuguese certifications for locale "pt-br"', async () => {
       const result = await repository.fetchCertifications(Locale.PT_BR);
@@ -31,14 +31,14 @@ describe('CertificationRepositoryJson', () => {
       expect(result[0]).toHaveProperty('title');
       expect(result[0]).toHaveProperty('description');
       expect(result[0]).toHaveProperty('tags');
-      expect(result[0]).toHaveProperty('link');
+      expect(result[0]).toHaveProperty('certificationUrl');
     });
     it('should return certifications with expected English data', async () => {
       const result = await repository.fetchCertifications(Locale.EN);
-      expect(result[0].id).toBe('50a477a5-c17d-4670-898c-943980634922');
-      expect(result[0].title).toBe('Spring Professional Certification');
-      expect(result[1].id).toBe('21f63263-de6e-4510-967c-989d3def8859');
-      expect(result[1].title).toBe('AWS Cloud Practitioner');
+      expect(result[0].id).toBe('21f63263-de6e-4510-967c-989d3def8859');
+      expect(result[0].title).toBe('AWS Cloud Practitioner');
+      expect(result[1].id).toBe('32cf2d0f-2ded-4011-b8dc-0eca3e0cd4e7');
+      expect(result[1].title).toBe('Java SE 11 Developer');
     });
     it('should return an array', async () => {
       const result = await repository.fetchCertifications(Locale.EN);

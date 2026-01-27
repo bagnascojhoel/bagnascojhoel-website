@@ -3,6 +3,7 @@ export interface Certification {
   title: string;
   description: string;
   tags: string[];
-  link: string;
+  certificationUrl: string;
+  relatedArticleUrl?: string;
   issuedAt?: string;
 }

@@ -3,16 +3,18 @@
     "id": "21f63263-de6e-4510-967c-989d3def8859",
     "type": "Certification",
     "title": "AWS Cloud Practitioner",
-    "description": "Notes on my studies for AWS Cloud Certification.",
-    "tags": ["AWS", "Cloud", "Certification"],
-    "link": "https://www.notion.so/21f63263de6e4510967c989d3def8859"
+    "description": "I understood cloud computing fundamentals and explored core AWS services. The exam covered everything from global infrastructure concepts to pricing models, security, and shared responsibility. Deepening knowledge in core services like EC2, S3, RDS, and IAM was fundamental.",
+    "tags": ["AWS", "Cloud", "Backend"],
+    "certificationUrl": "https://www.credly.com/badges/202d3ec9-1a79-44de-a718-87513453bb9d/linked_in_profile",
+    "relatedArticleUrl": "https://blog.bagnascojhoel.com.br/aws-cloud-practitioner"
   },
   {
     "id": "32cf2d0f-2ded-4011-b8dc-0eca3e0cd4e7",
     "type": "Certification",
     "title": "Java SE 11 Developer",
-    "description": "Certification study notes.",
-    "tags": ["Java", "Oracle", "Certification"],
-    "link": "https://www.notion.so/32cf2d0f2ded4011b8dc0eca3e0cd4e7"
+    "description": "I consolidated language fundamentals and dove into modern features like modules, streams, and lambda expressions. The exam covered everything from object-oriented programming to advanced concepts like generics, JDBC, and the I/O API. Strengthening knowledge in exception handling and collections was essential.",
+    "tags": ["Java", "Oracle", "Backend"],
+    "certificationUrl": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=BCF9CB151C08B74071FF0CBC46E5915510649773CEF7641CE5AABB1820511219",
+    "relatedArticleUrl": "https://blog.bagnascojhoel.com.br/java-se-11-developer"
   }
 ]

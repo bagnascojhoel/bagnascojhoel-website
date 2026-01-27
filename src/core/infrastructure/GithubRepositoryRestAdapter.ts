@@ -107,7 +107,6 @@ export class GithubRepositoryRestAdapter implements GithubRepository {
         description?: string;
         tags?: string[];
         websiteUrl?: string;
-        startsOpen?: boolean;
         complexity?: Complexity;
         showEvenArchived?: boolean;
       };
@@ -117,7 +116,6 @@ export class GithubRepositoryRestAdapter implements GithubRepository {
         customDescription: d.description,
         customTopics: d.tags || [],
         websiteUrl: d.websiteUrl,
-        startsOpen: d.startsOpen,
         complexity: d.complexity,
         showEvenArchived: d.showEvenArchived || false,
       };

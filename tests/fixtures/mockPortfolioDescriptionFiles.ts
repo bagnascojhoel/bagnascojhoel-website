@@ -9,7 +9,6 @@ export const mockPortfolioDescriptionFiles: { repositoryId: string; content: str
       tags: ['custom', 'portfolio'],
       websiteUrl: 'https://example.com',
       complexity: 'extreme',
-      startsOpen: true,
       showEvenArchived: true,
     }),
   },

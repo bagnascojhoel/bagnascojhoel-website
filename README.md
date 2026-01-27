@@ -89,7 +89,6 @@ interface ExtraPortfolioDescription {
   customTopics?: string[]; // Optional: Array of custom topic strings
   websiteUrl?: string; // Optional: URL to the project's website
   complexity?: 'extreme' | 'high' | 'medium' | 'low'; // Optional: Project complexity level
-  startsOpen?: boolean; // Optional: Whether the project details start expanded
   showEvenArchived?: boolean; // Optional: Show even if repository is archived
   isHidden?: boolean; // Optional: Hide the project from the portfolio
 }
@@ -97,12 +96,9 @@ interface ExtraPortfolioDescription {
 
 ## To Do's
 
-- Certifications should have a link to the certification badge/certificate.
-- Use the startsOpen flag from portfolio-description.json.
 - Introduce a ignore flag on portfolio-description.json that makes the project ignored.
-- Update project README.
 - Localization in PT-BR of projects.
 - Add google analytics or similar to track accesses.
-- Links from articles should take to the actual article.
 - The ADRs are beign generated too verbosely. And other files, besides the ADR, were created.
 - The implementation plans are not being split amongst files.
+- Add tags to each experience.

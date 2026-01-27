@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Banners</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet"> 
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="common.css" />
     <link rel="stylesheet" href="background-banner.css" />
     <link rel="stylesheet" href="jumbotron-banner.css" />
@@ -28,7 +31,10 @@
       <li class="jumbotron-banner geometric-shapes-background">
         <div class="text">
           <h1>Hey, I am <span>Jhoel</span></h1>
-          <p>I am a fullstack software engineer with more than <span>5 years of experience</span>, specialized in backend development.</p>
+          <p>
+            I am a fullstack software engineer with more than <span>5 years of experience</span>,
+            specialized in backend development.
+          </p>
         </div>
         <div class="background-dots"></div>
         <div class="geometric-shapes" aria-hidden="true">
@@ -54,12 +60,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script>
-      document.getElementById('capture-btn').addEventListener('click', function() {
+      document.getElementById('capture-btn').addEventListener('click', function () {
         const selectedIndex = document.getElementById('banner-select').value;
         const banners = document.querySelectorAll('#banner-list > li');
         const selectedBanner = banners[selectedIndex];
         const bannerNames = ['background-banner', 'jumbotron-banner'];
-        domtoimage.toBlob(selectedBanner).then(function(blob) {
+        domtoimage.toBlob(selectedBanner).then(function (blob) {
           window.saveAs(blob, bannerNames[selectedIndex] + '.png');
         });
       });

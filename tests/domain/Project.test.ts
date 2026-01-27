@@ -70,14 +70,12 @@ describe('Project', () => {
         .withUpdatedAt('2024-01-02T00:00:00Z')
         .withWebsiteUrl('https://website.com')
         .withComplexity('high')
-        .withStartsOpen(true)
         .build();
 
       expect(project.createdAt).toBe('2024-01-01T00:00:00Z');
       expect(project.updatedAt).toBe('2024-01-02T00:00:00Z');
       expect(project.websiteUrl).toBe('https://website.com');
       expect(project.complexity).toBe('high');
-      expect(project.startsOpen).toBe(true);
     });
 
     it('should throw error when id is missing', () => {

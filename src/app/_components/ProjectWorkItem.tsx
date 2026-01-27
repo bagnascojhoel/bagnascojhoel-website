@@ -1,28 +1,15 @@
 'use client';
-
 import React, { useState } from 'react';
 import { Layers, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PublicWorkItem } from '@/core/domain/PublicWorkItem';
-import { Certification } from '@/core/domain/Certification';
+import { Project } from '@/core/domain/Project';
 import { useTranslations } from 'next-intl';
-interface WorkItemProps {
-  item: PublicWorkItem;
+interface ProjectWorkItemProps {
+  item: Project;
 }
-const isCertification = (item: PublicWorkItem): item is PublicWorkItem & Certification => {
-  return item.workItemType === 'certification';
-};
-const WorkItem = ({ item }: WorkItemProps) => {
+const ProjectWorkItem = ({ item }: ProjectWorkItemProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const t = useTranslations('Work');
-  const getItemLink = () => {
-    if (isCertification(item)) {
-      return item.certificationUrl;
-    }
-    return item.link;
-  };
-  const hasRelatedArticle = isCertification(item) && item.relatedArticleUrl;
-  const relatedArticleUrl = isCertification(item) ? item.relatedArticleUrl : undefined;
   const toggleExpand = (e: React.MouseEvent) => {
     if (isExpanded && (e.target as HTMLElement).closest('a')) {
       return;
@@ -32,7 +19,6 @@ const WorkItem = ({ item }: WorkItemProps) => {
     }
     setIsExpanded(!isExpanded);
   };
-
   return (
     <motion.article
       layout
@@ -45,16 +31,14 @@ const WorkItem = ({ item }: WorkItemProps) => {
         layout
         className="block text-xs font-mono font-medium uppercase tracking-wider text-primary mb-1"
       >
-        {t(`type.${item.workItemType}`)}
+        {t('type.project')}
       </motion.span>
-
       <motion.h3
         layout
         className="text-base font-semibold font-mono leading-tight mb-3 text-foreground"
       >
         {item.title}
       </motion.h3>
-
       <AnimatePresence initial={false}>
         {!isExpanded && (
           <motion.div
@@ -74,7 +58,6 @@ const WorkItem = ({ item }: WorkItemProps) => {
           </motion.div>
         )}
       </AnimatePresence>
-
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -95,24 +78,14 @@ const WorkItem = ({ item }: WorkItemProps) => {
                 </span>
               ))}
             </div>
-            <div className="flex justify-end gap-2 flex-wrap">
-              {hasRelatedArticle && relatedArticleUrl && (
-                <a
-                  href={relatedArticleUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-sm font-mono text-primary hover:underline"
-                >
-                  {t('readArticle')} <ArrowUpRight size={14} />
-                </a>
-              )}
+            <div className="flex justify-end">
               <a
-                href={getItemLink()}
+                href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-sm font-mono text-primary hover:underline"
               >
-                {t('viewProject')} <ArrowUpRight size={14} />
+                {t('viewCode')} <ArrowUpRight size={14} />
               </a>
             </div>
           </motion.div>
@@ -121,5 +94,4 @@ const WorkItem = ({ item }: WorkItemProps) => {
     </motion.article>
   );
 };
-
-export default WorkItem;
+export default ProjectWorkItem;

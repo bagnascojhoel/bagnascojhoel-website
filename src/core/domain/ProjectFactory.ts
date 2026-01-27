@@ -36,9 +36,6 @@ export class ProjectFactory {
       if (extraPortfolioDescription.complexity) {
         builder.withComplexity(extraPortfolioDescription.complexity);
       }
-      if (extraPortfolioDescription.startsOpen !== undefined) {
-        builder.withStartsOpen(extraPortfolioDescription.startsOpen);
-      }
     }
     return builder.build();
   }

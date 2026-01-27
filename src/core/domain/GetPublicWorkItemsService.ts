@@ -11,6 +11,7 @@ import { ArticleRepositoryToken } from './ArticleRepository';
 import type { ArticleRepository } from './ArticleRepository';
 import { PublicWorkItem } from './PublicWorkItem';
 import { Article } from './Article';
+import { Project } from './Project';
 import { inject, injectable } from 'inversify';
 import { DEFAULT_LOCALE, Locale } from './Locale';
 
@@ -132,13 +133,14 @@ export class GetPublicWorkItemsService {
     return array;
   }
 
-  private labelWorkItemAs(
+  private labelWorkItemAs<T extends Project | Article | Certification>(
     type: PublicWorkItem['workItemType']
-  ): (item: Omit<PublicWorkItem, 'workItemType'>) => PublicWorkItem {
-    return (item: Omit<PublicWorkItem, 'workItemType'>): PublicWorkItem => ({
-      ...item,
-      workItemType: type,
-    });
+  ): (item: T) => PublicWorkItem {
+    return (item: T): PublicWorkItem =>
+      ({
+        ...item,
+        workItemType: type,
+      }) as PublicWorkItem;
   }
 
   private isFullfilled<T>(result: PromiseSettledResult<T>): boolean {

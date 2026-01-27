@@ -9,7 +9,6 @@ export const mockExtraDescriptionFull: any = {
   customTopics: ['custom', 'portfolio'],
   websiteUrl: 'https://example.com',
   complexity: 'extreme',
-  startsOpen: true,
   showEvenArchived: true,
 };
 

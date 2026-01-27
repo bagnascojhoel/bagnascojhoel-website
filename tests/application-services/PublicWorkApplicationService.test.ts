@@ -60,7 +60,7 @@ const mockCertRepo: CertificationRepository = {
       title: 'Cert 1',
       description: 'desc',
       tags: ['cert'],
-      link: 'https://example.com',
+      certificationUrl: 'https://example.com',
     },
   ],
 };
@@ -251,7 +251,7 @@ describe('PublicWorkApplicationService', () => {
           title: 'Cert 1',
           description: 'desc1',
           tags: ['cert'],
-          link: 'https://example.com/c1',
+          certificationUrl: 'https://example.com/c1',
         },
         {
           id: 'c2',
@@ -259,7 +259,7 @@ describe('PublicWorkApplicationService', () => {
           title: 'Cert 2',
           description: 'desc2',
           tags: ['cert'],
-          link: 'https://example.com/c2',
+          certificationUrl: 'https://example.com/c2',
         },
       ],
     };
