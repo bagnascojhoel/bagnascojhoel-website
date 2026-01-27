@@ -1,0 +1,116 @@
+.background-banner {
+  display: block;
+  width: 1584px;
+  height: 264px;
+}
+
+.background-banner.geometric-shapes-background {
+  color: hsl(var(--color-foreground));
+  background-color: hsl(var(--color-background));
+  transition: var(--transition);
+  position: relative;
+  display: block;
+}
+
+.background-banner .background-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--color-accent) / 0.08) 2px, transparent 2px);
+  background-size: 14px 15px;
+  filter: blur(0.5px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.background-banner .geometric-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.background-banner .shape {
+  position: absolute;
+  animation: float 19s ease-in-out infinite;
+}
+
+/* ===== Shape Variants ===== */
+
+/* Large squares - Orange border only (190px) */
+.background-banner .shape-large {
+  width: 190px;
+  height: 190px;
+  border: 3px solid hsl(var(--color-primary));
+  border-radius: 19px;
+  opacity: 0.12; /* Very subtle for background effect */
+}
+
+/* Medium squares - Accent border only (125px) */
+.background-banner .shape-medium {
+  width: 125px;
+  height: 125px;
+  border: 3px solid hsl(var(--color-accent));
+  border-radius: 14px;
+  opacity: 0.15;
+}
+
+/* Small squares - Solid orange fill (62px) */
+.background-banner .shape-small {
+  width: 62px;
+  height: 62px;
+  background: hsl(var(--color-primary));
+  border-radius: 9px;
+  opacity: 0.1;
+}
+
+/* ===== Shape Positioning ===== */
+/* Each shape has unique position and animation delay for variety */
+
+.background-banner .shape-1 {
+  top: 25%;
+  left: 12%;
+  animation-delay: -4s;
+  transform: rotate(-10deg);
+}
+
+.background-banner .shape-2 {
+  top: -5%;
+  right: 8%;
+  transform: rotate(15deg);
+}
+
+.background-banner .shape-3 {
+  top: -8%;
+  left: 18%;
+  transform: rotate(-5deg);
+}
+
+.background-banner .shape-4 {
+  bottom: -7%;
+  right: 25%;
+}
+
+.background-banner .shape-5 {
+  top: 12%;
+  right: 44%;
+  transform: rotate(-15deg);
+}
+
+.background-banner .shape-6 {
+  top: 45%;
+  right: 15%;
+  transform: rotate(5deg);
+}
+
+.background-banner .shape-7 {
+  top: 12%;
+  right: 43%;
+  transform: rotate(-15deg);
+}
+
+.background-banner .shape-8 {
+  top: 75%;
+  left: 35%;
+  transform: rotate(15deg);
+}

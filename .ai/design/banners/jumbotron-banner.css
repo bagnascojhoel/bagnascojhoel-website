@@ -1,0 +1,149 @@
+.jumbotron-banner {
+  display: block;
+  width: 1280px;
+  height: 320px;
+}
+
+.jumbotron-banner > .text {
+  position: relative;
+  z-index: 2;
+  padding: calc(var(--spacing-unit) * 8);
+  padding-top: calc(var(--spacing-unit) * 12);
+}
+
+.jumbotron-banner h1 {
+  font-family: var(--font-mono);
+  color: hsl(var(--color-card-foreground));
+  font-size: var(--text-6xl);
+  margin-bottom: calc(var(--spacing-unit) * 1);
+}
+
+.jumbotron-banner h1 span {
+  color: hsl(var(--color-accent));
+}
+
+.jumbotron-banner p {
+  font-size: 1.25rem;
+  margin-top: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-3xl);
+}
+
+.jumbotron-banner p span {
+  font-weight: bold;
+  text-decoration-line: underline;
+  text-decoration-color: hsl(var(--color-accent));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.jumbotron-banner.geometric-shapes-background {
+  color: hsl(var(--color-foreground));
+  background-color: hsl(var(--color-background));
+  transition: var(--transition);
+  position: relative;
+  display: block;
+}
+
+.jumbotron-banner .background-dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, hsl(var(--color-accent) / 0.08) 2px, transparent 2px);
+  background-size: 14px 15px;
+  filter: blur(0.5px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.jumbotron-banner .geometric-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.jumbotron-banner .shape {
+  position: absolute;
+  animation: float 19s ease-in-out infinite;
+}
+
+/* ===== Shape Variants ===== */
+
+/* Large squares - Orange border only (149px) */
+.jumbotron-banner .shape-large {
+  width: 149px;
+  height: 149px;
+  border: 3px solid hsl(var(--color-primary));
+  border-radius: 15px;
+  opacity: 0.12; /* Very subtle for background effect */
+}
+
+/* Medium squares - Accent border only (99px) */
+.jumbotron-banner .shape-medium {
+  width: 99px;
+  height: 99px;
+  border: 3px solid hsl(var(--color-accent));
+  border-radius: 11px;
+  opacity: 0.15;
+}
+
+/* Small squares - Solid orange fill (49px) */
+.jumbotron-banner .shape-small {
+  width: 49px;
+  height: 49px;
+  background: hsl(var(--color-primary));
+  border-radius: 7px;
+  opacity: 0.1;
+}
+
+/* ===== Shape Positioning ===== */
+/* Each shape has unique position and animation delay for variety */
+
+.jumbotron-banner .shape-1 {
+  top: 25%;
+  left: 12%;
+  animation-delay: -4s;
+  transform: rotate(-10deg);
+}
+
+.jumbotron-banner .shape-2 {
+  top: -5%;
+  right: 8%;
+  transform: rotate(15deg);
+}
+
+.jumbotron-banner .shape-3 {
+  bottom: -5%;
+  left: -2%;
+  transform: rotate(-5deg);
+}
+
+.jumbotron-banner .shape-4 {
+  bottom: -7%;
+  right: 25%;
+}
+
+.jumbotron-banner .shape-5 {
+  top: 12%;
+  right: 34%;
+  transform: rotate(-15deg);
+}
+
+.jumbotron-banner .shape-6 {
+  bottom: 40%;
+  left: 8%;
+  transform: rotate(5deg);
+}
+
+.jumbotron-banner .shape-7 {
+  top: 12%;
+  right: 33%;
+  transform: rotate(-15deg);
+}
+
+.jumbotron-banner .shape-8 {
+  top: 75%;
+  left: 45%;
+  transform: rotate(15deg);
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banners</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="common.css" />
+    <link rel="stylesheet" href="background-banner.css" />
+    <link rel="stylesheet" href="jumbotron-banner.css" />
+  </head>
+  <body>
+    <ul id="banner-list">
+      <li class="background-banner geometric-shapes-background">
+        <div class="background-dots"></div>
+        <div class="geometric-shapes" aria-hidden="true">
+          <div class="shape shape-large shape-1"></div>
+          <div class="shape shape-large shape-2"></div>
+          <div class="shape shape-medium shape-3"></div>
+          <div class="shape shape-medium shape-4"></div>
+          <div class="shape shape-medium shape-5"></div>
+          <div class="shape shape-small shape-6"></div>
+          <div class="shape shape-small shape-7"></div>
+          <div class="shape shape-small shape-8"></div>
+        </div>
+      </li>
+
+      <li class="jumbotron-banner geometric-shapes-background">
+        <div class="text">
+          <h1>Hey, I am <span>Jhoel</span></h1>
+          <p>I am a fullstack software engineer with more than <span>5 years of experience</span>, specialized in backend development.</p>
+        </div>
+        <div class="background-dots"></div>
+        <div class="geometric-shapes" aria-hidden="true">
+          <div class="shape shape-large shape-1"></div>
+          <div class="shape shape-large shape-2"></div>
+          <div class="shape shape-medium shape-3"></div>
+          <div class="shape shape-medium shape-4"></div>
+          <div class="shape shape-medium shape-5"></div>
+          <div class="shape shape-small shape-6"></div>
+          <div class="shape shape-small shape-7"></div>
+          <div class="shape shape-small shape-8"></div>
+        </div>
+      </li>
+      <!-- Add more banner items here as needed -->
+    </ul>
+    <div id="controls">
+      <select id="banner-select">
+        <option value="0">Background Banner</option>
+        <option value="1">Jumbotron Banner</option>
+      </select>
+      <button id="capture-btn">Generate Banner</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script>
+      document.getElementById('capture-btn').addEventListener('click', function() {
+        const selectedIndex = document.getElementById('banner-select').value;
+        const banners = document.querySelectorAll('#banner-list > li');
+        const selectedBanner = banners[selectedIndex];
+        const bannerNames = ['background-banner', 'jumbotron-banner'];
+        domtoimage.toBlob(selectedBanner).then(function(blob) {
+          window.saveAs(blob, bannerNames[selectedIndex] + '.png');
+        });
+      });
+    </script>
+  </body>
+</html>
