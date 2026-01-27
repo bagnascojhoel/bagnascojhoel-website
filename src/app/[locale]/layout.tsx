@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { routing } from '@/app/_lib/routing';
 import { Locale } from '@/core/domain/Locale';
+import Script from 'next/script';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,6 +37,25 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        {process.env.NODE_ENV === 'production' && (
+          <>
+            <Script
+              async
+              src="https://www.googletagmanager.com/gtag/js?id=G-BBDHP026QZ"
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-BBDHP026QZ');
+              `}
+            </Script>
+          </>
+        )}
+      </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}

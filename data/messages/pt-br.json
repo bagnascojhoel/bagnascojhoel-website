@@ -2,9 +2,9 @@
   "Hero": {
     "greeting": "Olá, eu sou",
     "name": "Jhoel",
-    "experience": "Sou um engenheiro de software com mais de <bold>4 anos de experiência</bold>, especializado em desenvolvimento backend.",
-    "stack1": "Tenho conhecimento profundo em <tech>Java e Spring</tech> para APIs HTTP/REST nativas da nuvem, com experiência de produção em AWS, DDD, arquitetura orientada a eventos e CI/CD. Também conheço Python e Node.js, bem como ferramentas de CI como Concourse e GitHub Actions.",
-    "stack2": "Como desenvolvedor front-end, me destaco com <tech>React, Next.js e Redux</tech>, mantendo uma base de código organizada e fortemente tipada com TypeScript, ESLint e Prettier.",
+    "experience": "Sou um engenheiro de software com mais de <bold>5 anos de experiência</bold>, especializado em desenvolvimento backend. Ultimamente, tenho dominado agentes de IA generativa para aumentar drasticamente minha produtividade mantendo alta qualidade de código.",
+    "stack1": "Tenho conhecimento profundo em <tech>Java, Spring e Quarkus</tech> para APIs HTTP/REST nativas da nuvem, com experiência de produção em AWS, DDD, arquitetura orientada a eventos e CI/CD. Também conheço <tech>Node.js</tech>, bem como ferramentas de CI como Concourse e GitHub Actions.",
+    "stack2": "Como desenvolvedor front-end, me destaco com <tech>React, Next.js e Vue.js</tech>, mantendo uma base de código organizada e fortemente tipada com TypeScript, ESLint e Prettier.",
     "blog": "blog"
   },
   "Experience": {
@@ -14,7 +14,7 @@
     "items": {
       "adp-senior": {
         "title": "Desenvolvedor de Software Sênior",
-        "description": "Trabalhando com Java 21 e Spring Boot, integrando o mais recente mecanismo de folha de pagamento empresarial com produtos existentes e MFEs incorporados.",
+        "description": "Trabalhando com Java 21 e Spring Boot, integrando o mais recente mecanismo de folha de pagamento empresarial com produtos existentes e MFEs incorporados. Também lidero a adoção de IA generativa para aumentar a produtividade da equipe.",
         "period": "Dezembro 2024 - "
       },
       "petlove": {

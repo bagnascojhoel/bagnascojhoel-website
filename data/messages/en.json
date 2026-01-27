@@ -2,9 +2,9 @@
   "Hero": {
     "greeting": "Hey, I am",
     "name": "Jhoel",
-    "experience": "I am a software engineer with more than <bold>4 years of experience</bold>, specialized in backend development.",
-    "stack1": "I have deep knowledge with <tech>Java and Spring</tech> for cloud-native HTTP/REST APIs, with production expertise in AWS, DDD, event-driven architecture, and CI/CD. I also know my way around Python and Node.js as well as CI tools like Concourse and GitHub Actions.",
-    "stack2": "As a front-end developer, I exceed with <tech>React, Next.js, and Redux</tech> while keeping an organized, strongly typed, code base with TypeScript, ESLint, and Prettier.",
+    "experience": "I am a software engineer with more than <bold>5 years of experience</bold>, specialized in backend development. Lately, I have been mastering generative AI agents to drastically increase my productivity while maintaining high code quality.",
+    "stack1": "I have deep knowledge in <tech>Java, Spring, and Quarkus</tech> for cloud-native HTTP/REST APIs, with production experience in AWS, DDD, event-driven architecture, and CI/CD. I also know <tech>Node.js</tech>, as well as CI tools like Concourse and GitHub Actions.",
+    "stack2": "As a front-end developer, I excel with <tech>React, Next.js, and Vue.js</tech>, maintaining an organized and strongly typed codebase with TypeScript, ESLint, and Prettier.",
     "blog": "blog"
   },
   "Experience": {
@@ -14,22 +14,22 @@
     "items": {
       "adp-senior": {
         "title": "Senior Software Developer",
-        "description": "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs.",
+        "description": "Working with Java 21 and Spring Boot, integrating the latest enterprise payroll engine with existing products and embedded MFEs. I also lead the adoption of generative AI to increase team productivity.",
         "period": "December 2024 - "
       },
       "petlove": {
         "title": "Senior Full-Stack Developer",
-        "description": "Enhanced a multi-tenancy ERP for Petlove and SaaS Clients. Maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform.",
+        "description": "I enhanced a multi-tenancy ERP for Petlove and SaaS Clients. I maintained the legacy monolithic system and led its modernization with microservices using Java (8 & 11), Spring Boot, JSF, Vue 3, and Google Cloud Platform.",
         "period": "April 2024 - December 2024"
       },
       "adp-backend": {
         "title": "Backend Developer",
-        "description": "Developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. Implemented a multi-language text search feature.",
+        "description": "I developed microservices with Java 17 and Spring Boot using BDD, DDD, and Ports and Adapters architecture. I implemented a multi-language text search feature.",
         "period": "June 2022 - April 2024"
       },
       "cwi": {
         "title": "Backend Developer",
-        "description": "Led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page.",
+        "description": "I led the development of a real-time user-data analysis system for a telecom provider to understand user behavior on the customer page.",
         "period": "July 2021 - June 2022"
       }
     }
